@@ -22,10 +22,12 @@ class User:
         return (self.id + " " +
                 self.name + " " +  
                 self.type + " " + 
-                self.competence + 
+                self.competence + " " +
                 self.login + " " +
                 self.password + " " + 
                 self.personal_data)
+    def __print__(self):
+        print(str(self))
 
     def __eq__(self, other):
         return (self.id == other.id and 

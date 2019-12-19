@@ -124,16 +124,3 @@ json_string = """
     except (Exception, psycopg2.DatabaseError) as error:
         print(error)
 """
-
-"""
-with conn.cursor() as cursor:
-    conn.autocommit = True
-    values = [
-        ('Васильева Алиса', 'студент', 'диспетчер', 'st063756', '1234'),
-        ('Петрова Светлана Владимировна', 'преподаватель', 'уголовное дело', 'st012345', '1234'),
-    ]
-    insert = sql.SQL('INSERT INTO users (name, type, competence, login, password) VALUES {}').format(
-        sql.SQL(',').join(map(sql.Literal, values))
-    )
-    cursor.execute(insert)
-"""
