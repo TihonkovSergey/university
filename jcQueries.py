@@ -66,6 +66,7 @@ class DataBase:
             return users
         else:
             return None
+    """ """
 
     def get_dispatchers(self):
         conn = psycopg2.connect(
