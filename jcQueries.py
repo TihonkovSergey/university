@@ -106,12 +106,13 @@ class DataBase:
                         competence = %s,
                         login =  %s,
                         password =  %s,
-                        personal_data =  %s
+                        personal_data =  %s,
+                        points = %s
                         WHERE user_id = %s"""
             try:
                 # execute the UPDATE  statement
                 cursor.execute(sql, (user.name, user.type, user.competence, user.login,
-                                     user.password, user.personal_data, user_id))
+                                     user.password, user.personal_data, user.points, user_id))
                 # get the number of updated rows
                 conn.commit()
                 # Close communication with the PostgreSQL database
