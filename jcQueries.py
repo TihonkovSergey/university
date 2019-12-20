@@ -1,4 +1,5 @@
 import psycopg2
+import datetime
 from jcUserClass import User
 from psycopg2 import sql
 
@@ -37,6 +38,42 @@ class DataBase:
         with conn.cursor() as cursor:
             cursor.execute('SELECT * FROM users WHERE type = %s ORDER BY name',
                            ('студент', ))
+            records = cursor.fetchall()
+        conn.close()
+        users = []
+        if len(records) > 0:
+            for rec in records:
+                user = User(rec)
+                users.append(user)
+            return users
+        else:
+            return None
+
+    def get_consultants(self):
+        conn = psycopg2.connect(
+            dbname=self.name, user=self.user, password=self.password, host=self.host)
+        records = []
+        with conn.cursor() as cursor:
+            cursor.execute('SELECT * FROM users WHERE competence = %s ORDER BY name',
+                           ('консультант', ))
+            records = cursor.fetchall()
+        conn.close()
+        users = []
+        if len(records) > 0:
+            for rec in records:
+                user = User(rec)
+                users.append(user)
+            return users
+        else:
+            return None
+
+    def get_dispatchers(self):
+        conn = psycopg2.connect(
+            dbname=self.name, user=self.user, password=self.password, host=self.host)
+        records = []
+        with conn.cursor() as cursor:
+            cursor.execute('SELECT * FROM users WHERE competence = %s ORDER BY name',
+                           ('диспетчер', ))
             records = cursor.fetchall()
         conn.close()
         users = []
