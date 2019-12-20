@@ -1,5 +1,6 @@
 import json
 
+
 class User:
     def __init__(self, user):
         self.id = str(user[0])
@@ -20,18 +21,14 @@ class User:
                 self.competence + " " +
                 self.login + " " +
                 self.password + " " +
-                self.personal_data + " " + 
+                self.personal_data + " " +
                 str(self.points))
 
     def __print__(self):
         print(str(self))
 
     def __eq__(self, other):
-<<<<<<< HEAD
-        if (not other):
-=======
         if not other:
->>>>>>> b7ab56a1b568764e2fa37c1ff11fc19844f3af0f
             return False
         return (self.id == other.id and
                 self.name == other.name and
