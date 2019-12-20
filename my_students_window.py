@@ -11,13 +11,14 @@ def show_my_students(main_user):
             windows_init.show_teacher(main_user)
         elif main_user.type == "тьютор":
             pass #TODO: переход на страничку тьютора
+        else:
+            pass #TODO: переход на страничку консультанта/диспетчера
     def show_students():
         lbox.delete(0,tk.END)
         global curr_students
-        if var.get() == 0: #TODO: выбор сортированности 
+        if var.get() == 0:
             if var_order.get() == 0:
                 curr_students = db.get_all_students()
-                print(curr_students[0])
             elif var_order.get() == 1:
                 curr_students = db.get_students_order_by_points()
             else:
@@ -52,7 +53,7 @@ def show_my_students(main_user):
             lbox.insert(tk.END, "Ничего не найдено")
             curr_students = []
         for st in curr_students:
-            lbox.insert(tk.END,st.name)
+            lbox.insert(tk.END,st.name + " " + str(st.points))
     
     def add_points():
         global curr_students
@@ -60,6 +61,16 @@ def show_my_students(main_user):
         if len(select) and curr_students:
             select_user = curr_students[ select[0] ]
             label['text'] = select_user.name #TODO: добавить переход на страничку отсыпки баллов
+        else:
+            label['text'] = "Выберите студента!"
+    
+    def show_profile():
+        global curr_students
+        select = list(lbox.curselection())
+        if len(select) and curr_students:
+            select_user = curr_students[select[0]]
+            root.destroy()
+            windows_init.show_profile(main_user, select_user)
         else:
             label['text'] = "Выберите студента!"
 
@@ -88,6 +99,7 @@ def show_my_students(main_user):
 
     b_show_students = tk.Button(text="Показать", compound=tk.TOP, command=show_students)
     b_add_points = tk.Button(text="Добавить баллы", command=add_points)
+    b_show_profile = tk.Button(text="Посмотреть профиль", command=show_profile)
     b_back = tk.Button(text="Назад", command=go_back)
     lbox = tk.Listbox(width = 40, height = 10)
     label = tk.Label(width=40)
@@ -101,6 +113,7 @@ def show_my_students(main_user):
     b_show_students.pack(side="top")
     lbox.pack(side="top")
     b_add_points.pack()
+    b_show_profile.pack()
     label.pack()
     b_back.pack(side=tk.RIGHT)
 
