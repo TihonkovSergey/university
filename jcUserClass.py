@@ -24,6 +24,8 @@ class User:
         print(str(self))
 
     def __eq__(self, other):
+        if (not other):
+            return False
         return (self.id == other.id and
                 self.name == other.name and
                 self.type == other.type and
