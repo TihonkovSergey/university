@@ -1,14 +1,7 @@
 import json
+
+
 class User:
-    def __init__(self):
-        self.id = -1
-        self.name = "Нет имени" 
-        self.type = "Нет типа"
-        self.competence = "Нет компетенции"
-        self.login = "Нет логина"
-        self.password = "Нет пароля"
-        self.personal_data =  json.loads("{}")
-    
     def __init__(self, user):
         self.id = str(user[0])
         self.name = str(user[1])
@@ -17,20 +10,21 @@ class User:
         self.login = str(user[4])
         self.password = str(user[5])
         self.personal_data = str(user[6])
-    
+
     def __str__(self):
         return (self.id + " " +
-                self.name + " " +  
-                self.type + " " + 
+                self.name + " " +
+                self.type + " " +
                 self.competence + " " +
                 self.login + " " +
-                self.password + " " + 
+                self.password + " " +
                 self.personal_data)
+
     def __print__(self):
         print(str(self))
 
     def __eq__(self, other):
-        return (self.id == other.id and 
+        return (self.id == other.id and
                 self.name == other.name and
                 self.type == other.type and
                 self.competence == other.competence and
