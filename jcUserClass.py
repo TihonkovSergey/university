@@ -9,6 +9,8 @@ class User:
         self.login = str(user[4])
         self.password = str(user[5])
         self.personal_data = str(user[6])
+        if (self.personal_data == "None"):
+            self.personal_data = "{}"
         self.points = float(user[7])
 
     def __str__(self):
@@ -25,6 +27,8 @@ class User:
         print(str(self))
 
     def __eq__(self, other):
+        if not other:
+            return False
         return (self.id == other.id and
                 self.name == other.name and
                 self.type == other.type and
