@@ -11,3 +11,4 @@ class Supplicant:
 
     def __print__(self):
         print(str(self))
+
