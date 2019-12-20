@@ -5,9 +5,9 @@ from psycopg2 import sql
 
 class DataBase:
     def __init__(self):
-        self.name = 'postgres'
+        self.name = 'db'
         self.user = 'postgres'
-        self.password = 'postgres'
+        self.password = 'Peony5155'
         self.host = 'localhost'
 
     def get_all_users(self):
@@ -19,6 +19,24 @@ class DataBase:
         records = []
         with conn.cursor() as cursor:
             cursor.execute('SELECT * FROM users')
+            records = cursor.fetchall()
+        conn.close()
+        users = []
+        if len(records) > 0:
+            for rec in records:
+                user = User(rec)
+                users.append(user)
+            return users
+        else:
+            return None
+
+    def get_all_students(self):
+        conn = psycopg2.connect(
+            dbname=self.name, user=self.user, password=self.password, host=self.host)
+        records = []
+        with conn.cursor() as cursor:
+            cursor.execute('SELECT * FROM users WHERE type = %s ORDER BY name',
+                           ('студент', ))
             records = cursor.fetchall()
         conn.close()
         users = []
