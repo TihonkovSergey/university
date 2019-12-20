@@ -1,6 +1,7 @@
 import json
 import datetime
-from jcQueries import DataBase
+#from jcQueries import DataBase
+from jcSupplicantClass import Supplicant
 
 
 class Case:
@@ -30,13 +31,3 @@ class Case:
 
     def __print__(self):
         print(str(self))
-
-
-"""now = datetime.datetime.now()
-data = [0, "Хищение в мелких размерах",
-        "Кража ручки", "Алиса украла 2 ручки!!!!!!!", None, None, "", None, None, ""]
-case1 = Case(data)
-cases = []
-cases.append(case1)
-db = DataBase()
-db.insert_cases(cases, 1, 1)"""
