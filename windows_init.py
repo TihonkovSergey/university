@@ -3,6 +3,7 @@ import teacher_window
 import my_cases_window
 import my_students_window
 import my_profile_window
+import profile_window
 
 def show_login(main_user):
     login_window.show_login(main_user)
@@ -18,3 +19,6 @@ def show_my_students(main_user):
 
 def show_my_profile(main_user):
     my_profile_window.show_my_profile(main_user)
+
+def show_profile(main_user, user):
+    profile_window.show_profile(main_user, user)
