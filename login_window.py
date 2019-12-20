@@ -24,12 +24,16 @@ def show_login(main_user):
                 root.destroy()
                 windows_init.show_teacher(main_user)
     root = tk.Tk()
+    root.resizable(False, False)
     screen_width = root.winfo_screenwidth() // 2 - 150 
     screen_height = root.winfo_screenheight() // 2 - 50 
     root.geometry('300x100+{}+{}'.format(screen_width, screen_height))
     root.title("Авторизация")
     
     db = DataBase()
+    db.name = "postgres"      #TODO: delete this
+    db.password = "postgres"  #TODO: delete this
+
     enter_login = tk.Entry()
     enter_password = tk.Entry()
     b_enter = tk.Button(text="Войти", command=try_login)
