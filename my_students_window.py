@@ -2,6 +2,8 @@ import tkinter as tk
 import windows_init
 from jcQueries import DataBase
 
+curr_students = []
+
 def show_my_students(main_user):
     def go_back():
         if main_user.type == "преподаватель":
@@ -9,49 +11,58 @@ def show_my_students(main_user):
             windows_init.show_teacher(main_user)
         elif main_user.type == "тьютор":
             pass #TODO: переход на страничку тьютора
-
     def show_students():
         lbox.delete(0,tk.END)
-        students = []
+        global curr_students
         if var.get() == 0: #TODO: выбор сортированности 
             if var_order.get() == 0:
-                students = db.get_all_students()
+                curr_students = db.get_all_students()
+                print(curr_students[0])
             elif var_order.get() == 1:
-                students = db.get_students_order_by_points()
+                curr_students = db.get_students_order_by_points()
             else:
                 sts = db.get_students_order_by_points()
                 if not sts:
-                    students = []
+                    curr_students = []
                 else:
-                    students=sts[::-1]
+                    curr_students=sts[::-1]
         elif var.get() == 1:
             if var_order.get() == 0:
-                students = db.get_consultants()
+                curr_students = db.get_consultants()
             elif var_order.get() == 1:
-                students = db.get_сonsultants_order_by_points()
+                curr_students = db.get_сonsultants_order_by_points()
             else:
                 sts = db.get_сonsultants_order_by_points()
                 if not sts:
-                    students = []
+                    curr_students = []
                 else:
-                    students = sts[::-1]
+                    curr_students = sts[::-1]
         else:
             if var_order.get() == 0:
-                students = db.get_dispatchers()
+                curr_students = db.get_dispatchers()
             elif var_order.get() == 1:
-                students = db.get_dispatchers_order_by_points()
+                curr_students = db.get_dispatchers_order_by_points()
             else:
                 sts = db.get_dispatchers_order_by_points()
                 if not sts:
-                    students = []
+                    curr_students = []
                 else:
-                    students = sts[::-1]
-        if not students:
+                    curr_students = sts[::-1]
+        if not curr_students:
             lbox.insert(tk.END, "Ничего не найдено")
-            students = []
-        for st in students:
+            curr_students = []
+        for st in curr_students:
             lbox.insert(tk.END,st.name)
     
+    def add_points():
+        global curr_students
+        select = list(lbox.curselection())
+        if len(select) and curr_students:
+            select_user = curr_students[ select[0] ]
+            label['text'] = select_user.name #TODO: добавить переход на страничку отсыпки баллов
+        else:
+            label['text'] = "Выберите студента!"
+
     root = tk.Tk()
     root.resizable(False, False)
     root.title("Мои студенты")
@@ -76,8 +87,10 @@ def show_my_students(main_user):
     r_by_p_d = tk.Radiobutton(text="По убыванию баллов", variable=var_order, value=2)
 
     b_show_students = tk.Button(text="Показать", compound=tk.TOP, command=show_students)
+    b_add_points = tk.Button(text="Добавить баллы", command=add_points)
     b_back = tk.Button(text="Назад", command=go_back)
     lbox = tk.Listbox(width = 40, height = 10)
+    label = tk.Label(width=40)
 
     r_all.pack()
     r_cons.pack()
@@ -87,6 +100,8 @@ def show_my_students(main_user):
     r_by_p_d.pack()
     b_show_students.pack(side="top")
     lbox.pack(side="top")
+    b_add_points.pack()
+    label.pack()
     b_back.pack(side=tk.RIGHT)
 
     root.mainloop()
