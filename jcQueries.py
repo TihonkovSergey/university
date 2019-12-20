@@ -285,7 +285,6 @@ class DataBase:
         else:
             return None
 
-
     def update_case_by_id(self, case):
         if self.get_case_by_id(case.case_id) == None:
             return None
@@ -318,12 +317,12 @@ class DataBase:
             except (Exception, psycopg2.DatabaseError) as error:
                 print(error)
 
-    """def cases_which_need_student_editing(self, student_id): # сережа долб
+    def get_cases_which_need_student_editing(self, student_id):  # сережа долб
         conn = psycopg2.connect(
             dbname=self.name, user=self.user, password=self.password, host=self.host)
         records = []
         with conn.cursor() as cursor:
-            cursor.execute('SELECT * FROM cases WHERE status = %s OR WHERE status = %s ORDER BY name',
+            cursor.execute('SELECT * FROM cases WHERE status = %s OR status = %s ORDER BY title',
                            ('ожидаются правки плана консультации', 'ожидаются правки резолюции'))
             records = cursor.fetchall()
         conn.close()
@@ -334,7 +333,25 @@ class DataBase:
                 cases.append(case)
             return cases
         else:
-            return None"""
+            return None
+
+    def get_cases_which_need_teacher_editing(self, teacher_id):  # сережа долб
+        conn = psycopg2.connect(
+            dbname=self.name, user=self.user, password=self.password, host=self.host)
+        records = []
+        with conn.cursor() as cursor:
+            cursor.execute('SELECT * FROM cases WHERE status = %s OR status = %s ORDER BY title',
+                           ('ожидается проверка правок плана консультации', 'ожидается проверка правок резолюции'))
+            records = cursor.fetchall()
+        conn.close()
+        cases = []
+        if len(records) > 0:
+            for rec in records:
+                case = Case(rec)
+                cases.append(case)
+            return cases
+        else:
+            return None
 
     def insert_supplicant(self, supplicants):
         conn = psycopg2.connect(
@@ -420,6 +437,3 @@ class DataBase:
             return cases
         else:
             return None
-
-
-
