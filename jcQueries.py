@@ -20,7 +20,6 @@ class DataBase:
         with conn.cursor() as cursor:
             cursor.execute('SELECT * FROM users')
             records = cursor.fetchall()
-        if
         conn.close()
         users = []
         if len(records) > 0:
@@ -84,7 +83,7 @@ class DataBase:
             return None
 
     def delete_user_by_id(self, id):
-        if db.get_user_by_id == None:
+        if db.get_user_by_id(id) == None:
             return None
         conn = psycopg2.connect(
             dbname=self.name, user=self.user, password=self.password, host=self.host)
@@ -93,3 +92,29 @@ class DataBase:
             cursor.execute('DELETE FROM users WHERE user_id = %s', (id, ))
         conn.close()
         return id
+
+    def update_user_by_id(self, user):
+        if db.get_user_by_id(user.id) == None:
+            return None
+        user_id = user.id
+        conn = psycopg2.connect(
+            dbname=self.name, user=self.user, password=self.password, host=self.host)
+        with conn.cursor() as cursor:
+            sql = """UPDATE users
+                        SET name = %s,
+                        type = %s,
+                        competence = %s,
+                        login =  %s,
+                        password =  %s,
+                        personal_data =  %s
+                        WHERE user_id = %s"""
+            try:
+                # execute the UPDATE  statement
+                cursor.execute(sql, (user.name, user.type, user.competence, user.login,
+                                     user.password, user.personal_data, user_id))
+                # get the number of updated rows
+                conn.commit()
+                # Close communication with the PostgreSQL database
+                cursor.close()
+            except (Exception, psycopg2.DatabaseError) as error:
+                print(error)
