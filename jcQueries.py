@@ -5,9 +5,9 @@ from psycopg2 import sql
 
 class DataBase:
     def __init__(self):
-        self.name = 'db'
+        self.name = 'postgres'
         self.user = 'postgres'
-        self.password = 'Peony5155'
+        self.password = 'postgres'
         self.host = 'localhost'
 
     def get_all_users(self):
@@ -83,7 +83,7 @@ class DataBase:
             return None
 
     def delete_user_by_id(self, id):
-        if db.get_user_by_id(id) == None:
+        if self.get_user_by_id(id) == None:
             return None
         conn = psycopg2.connect(
             dbname=self.name, user=self.user, password=self.password, host=self.host)
@@ -94,7 +94,7 @@ class DataBase:
         return id
 
     def update_user_by_id(self, user):
-        if db.get_user_by_id(user.id) == None:
+        if self.get_user_by_id(user.id) == None:
             return None
         user_id = user.id
         conn = psycopg2.connect(
