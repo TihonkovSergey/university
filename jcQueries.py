@@ -300,6 +300,9 @@ class DataBase:
             except (Exception, psycopg2.DatabaseError) as error:
                 print(error)
 
+    #def cases_which_need_student_editing(self, student_id):
+
+
     def insert_supplicant(self, supplicants):
         conn = psycopg2.connect(
             dbname=self.name, user=self.user, password=self.password, host=self.host)
@@ -386,12 +389,4 @@ class DataBase:
             return None
 
 
-db = DataBase()
 
-st = db.get_cases_by_student_id(6)
-t = db.get_cases_by_teacher_id(2)
-for s in st:
-    print(s.title)
-
-for tt in t:
-    print(tt.title)
