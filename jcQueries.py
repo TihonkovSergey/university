@@ -4,19 +4,22 @@ from jcUserClass import User
 from psycopg2 import sql
 from jcSupplicantClass import Supplicant
 from jcCaseClass import Case
+from jcPointsEventClass import PointsEvent
 
 from usersQueries import UsersQuery
 from pointsQueries import PointsQuery
 from caseQueries import CaseQuery
 from supplicantQueries import SupplicantQuery
 
+from db_config import DB
+
 
 class DataBase:
     def __init__(self):
-        self.name = 'db'
-        self.user = 'postgres'
-        self.password = 'Peony5155'
-        self.host = 'localhost'
+        self.name = ""
+        self.user = ""
+        self.password = ""
+        self.host = ""
 
     def insert_users(self, users):
         q = UsersQuery()
@@ -54,6 +57,24 @@ class DataBase:
         q = UsersQuery()
         return q.get_dispatchers()
 
+    """"""
+
+    def insert_points_event(self, points_events):
+        q = PointsQuery()
+        return q.insert_points_event(points_events)
+
+    def get_points_event_by_id(self, id):
+        q = PointsQuery()
+        return q.get_points_event_by_id(id)
+
+    def get_points_event_by_s_id(self, student_id):
+        q = PointsQuery()
+        return q.get_points_event_by_s_id(student_id)
+
+    def get_points_event_by_t_id(self, teacher_id):
+        q = PointsQuery()
+        return q.get_points_event_by_t_id(teacher_id)
+
     def get_students_order_by_points(self):
         q = PointsQuery()
         return q.get_students_order_by_points()
@@ -66,6 +87,8 @@ class DataBase:
         q = PointsQuery()
         return q.get_сonsultants_order_by_points()
 
+    """"""
+
     def insert_cases(self, cases, disp_id, suppl_id):
         q = CaseQuery()
         return q.insert_cases(cases, disp_id, suppl_id)
@@ -74,6 +97,30 @@ class DataBase:
         q = CaseQuery()
         return q.get_case_by_id(id)
 
+    def get_all_cases(self):
+        q = CaseQuery()
+        return q.get_all_cases()
+
+    def update_case_by_id(self, case):
+        q = CaseQuery()
+        return q.update_case_by_id(case)
+
+    def get_cases_which_need_student_editing(self, student_id):
+        q = CaseQuery()
+        return q.get_cases_which_need_student_editing(student_id)
+
+    def get_cases_which_need_teacher_editing(self, teacher_id):
+        q = CaseQuery()
+        return q.get_cases_which_need_teacher_editing(teacher_id)
+
+    def get_student_completed_cases(self, student_id):
+        q = CaseQuery()
+        return q.get_student_completed_cases(student_id)
+
+    def get_teacher_completed_cases(self, teacher_id):
+        q = CaseQuery()
+        return q.get_teacher_completed_cases(teacher_id)
+
     def get_cases_by_student_id(self, student_id):
         q = CaseQuery()
         return q.get_cases_by_student_id(student_id)
@@ -81,6 +128,8 @@ class DataBase:
     def get_cases_by_teacher_id(self, teacher_id):
         q = CaseQuery()
         return q.get_cases_by_teacher_id(teacher_id)
+
+    """"""
 
     def insert_supplicant(self, supplicants):
         q = SupplicantQuery()
