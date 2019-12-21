@@ -30,7 +30,7 @@ def show_my_cases(main_user):
             lbox.insert(tk.END, "Ничего не найдено")
             curr_cases = []
         for c in curr_cases:
-            lbox.insert(0,c.title)
+            lbox.insert(tk.END,c.title)
     def show_check():
         lbox.delete(0,tk.END)
         global curr_cases
@@ -45,16 +45,22 @@ def show_my_cases(main_user):
             lbox.insert(tk.END, "Ничего не найдено")
             curr_cases = []
         for c in curr_cases:
-            lbox.insert(0,c.title)
-    def show_finished(): # TODO: добавить функции запросов когда появятся  
+            lbox.insert(tk.END,c.title)
+    def show_finished():
         lbox.delete(0,tk.END)
         global curr_cases
-
+        if main_user.type == "тьютор":
+            pass
+            #cases = get_cases_by_cat_for_id() # TODO: все законченные
+        elif main_user.type == "преподаватель":
+            curr_cases = db.get_teacher_completed_cases(main_user.id)
+        else:
+            curr_cases = db.get_student_completed_cases(main_user.id)
         if not curr_cases:
             lbox.insert(tk.END, "Ничего не найдено")
             curr_cases = []
         for c in curr_cases:
-            lbox.insert(0,c.title)
+            lbox.insert(tk.END,c.title)
 
     def show_case_win():
         global curr_cases
