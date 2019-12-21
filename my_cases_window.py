@@ -11,8 +11,12 @@ def show_my_cases(main_user):
             windows_init.show_teacher(main_user)
         elif main_user.type == "тьютор":
             pass #TODO: переход на страничку тьютора
-        else:
-            pass #TODO: переход на страничку консультанта/диспетчера
+        elif main_user.type == "студент":
+            root.destroy()
+            windows_init.show_consultant_window(main_user)
+        else: # какая-то ошибка
+            root.destroy()
+            windows_init.show_login(main_user)
     def show_all():
         lbox.delete(0,tk.END)
         global curr_cases

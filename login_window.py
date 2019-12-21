@@ -23,6 +23,15 @@ def show_login(main_user):
             if user.type == 'преподаватель':
                 root.destroy()
                 windows_init.show_teacher(main_user)
+            elif user.type == "студент" and user.competence == "консультант":
+                root.destroy()
+                windows_init.show_consultant_window(main_user)
+            elif user.type == "студент" and user.competence == "диспетчер":
+                pass #TODO: сделать переход на страницу диспетчера
+            elif user.type == "админ":
+                pass #TODO: сделать переход на страницу админа
+            else:
+                except_label['text'] = "Неизвестная роль!"
     root = tk.Tk()
     root.resizable(False, False)
     screen_width = root.winfo_screenwidth() // 2 - 150 
@@ -31,10 +40,9 @@ def show_login(main_user):
     root.title("Авторизация")
     
     db = DataBase()
-    db.name = "postgres"      #TODO: delete this
-    db.password = "postgres"  #TODO: delete this
 
     enter_login = tk.Entry()
+    enter_login.insert(0, main_user.login)
     enter_password = tk.Entry()
     b_enter = tk.Button(text="Войти", command=try_login)
     except_label = tk.Label(width=40)

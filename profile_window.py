@@ -7,9 +7,10 @@ def show_profile(main_user, user):
         if main_user.type == "преподаватель":
             root.destroy()
             windows_init.show_teacher(main_user)
-        elif main_user.type == "студент":
-            pass #TODO: перейти на страницу студента
-        else:
+        elif main_user.type == "студент" and main_user.competence == "консультант":
+            root.destroy()
+            windows_init.show_consultant_window(main_user)
+        else: #TODO: перейти на страницу диспетчера
             pass #TODO: перейти на страницу тьютора
 
     root = tk.Tk()
