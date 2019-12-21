@@ -5,7 +5,7 @@ import windows_init
 def show_case(main_user, case):
     def save():
         case.title = e_title.get()
-        case.description = e_description.get()
+        case.description = t_description.get(0.0, tk.END)
         db.update_case_by_id(case)
         go_back()
     
@@ -17,6 +17,9 @@ def show_case(main_user, case):
             pass #TODO: перейти на страницу студента
         else:
             pass #TODO: перейти на страницу тьютора
+    
+    def add_doc(): #TODO: добавить диалоговое окно с добавлением документа
+        b_add_doc['text'] = "Добавляет документ"
 
     root = tk.Tk()
     root.resizable(False, False)
@@ -29,12 +32,14 @@ def show_case(main_user, case):
     db.name = "postgres"      #TODO: delete this
     db.password = "postgres"  #TODO: delete this
 
-    e_title = tk.Entry(width=40)
+    e_title = tk.Entry(width=50)
     e_title.insert(0, case.title)
 
     l_category = tk.Label(text="Категория: " + case.category)
-    e_description = tk.Entry(width=40)
-    e_description.insert(0, "Описание: " + case.description)
+    l_description = tk.Label()
+    l_description['text'] = "Описание: "
+    t_description = tk.Text(width=35, height=10)
+    t_description.insert(0.0, case.description)
     
     l_st = tk.Label(width=40)
     if case.s_id and case.s_id != "None" and case.s_id != "null":
@@ -70,18 +75,21 @@ def show_case(main_user, case):
     l_last_update = tk.Label(width=40)
     l_last_update['text'] = "Последнее изменение: " + case.last_update[:min(10,len(case.last_update))]
 
+    b_add_doc = tk.Button(text="Прикрепить документ", command=add_doc)
     b_save = tk.Button(text="Сохранить и выйти", command=save)
     b_back = tk.Button(text="На главную", command=go_back)
     
     e_title.pack()
     l_category.pack()
-    e_description.pack()
+    l_description.pack()
+    t_description.pack()
     l_st.pack()
     l_t.pack()
     l_sup.pack()
     l_disp.pack()
     l_last_update.pack()
     
+    b_add_doc.pack()
     b_save.pack(side="bottom")
     b_back.pack(side=tk.RIGHT)
 
