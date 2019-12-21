@@ -5,13 +5,16 @@ from psycopg2 import sql
 
 from jcCaseClass import Case
 
+from db_config import DB
+
 
 class CaseQuery:
     def __init__(self):
-        self.name = 'db'
-        self.user = 'postgres'
-        self.password = 'Peony5155'
-        self.host = 'localhost'
+        db = DB()
+        self.name = db.name
+        self.user = db.user
+        self.password = db.password
+        self.host = db.host
 
     def insert_cases(self, cases, disp_id, suppl_id):
         conn = psycopg2.connect(
@@ -98,7 +101,7 @@ class CaseQuery:
             except (Exception, psycopg2.DatabaseError) as error:
                 print(error)
 
-    def get_cases_which_need_student_editing(self, student_id):  # сережа долб
+    def get_cases_which_need_student_editing(self, student_id):
         conn = psycopg2.connect(
             dbname=self.name, user=self.user, password=self.password, host=self.host)
         records = []
@@ -116,7 +119,7 @@ class CaseQuery:
         else:
             return None
 
-    def get_cases_which_need_teacher_editing(self, teacher_id):  # сережа долб
+    def get_cases_which_need_teacher_editing(self, teacher_id):
         conn = psycopg2.connect(
             dbname=self.name, user=self.user, password=self.password, host=self.host)
         records = []

@@ -3,13 +3,16 @@ import datetime
 from jcUserClass import User
 from psycopg2 import sql
 
+from db_config import DB
+
 
 class UsersQuery:
     def __init__(self):
-        self.name = 'db'
-        self.user = 'postgres'
-        self.password = 'Peony5155'
-        self.host = 'localhost'
+        db = DB()
+        self.name = db.name
+        self.user = db.user
+        self.password = db.password
+        self.host = db.host
 
     def insert_users(self, users):
         """
