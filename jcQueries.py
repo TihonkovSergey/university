@@ -322,8 +322,8 @@ class DataBase:
             dbname=self.name, user=self.user, password=self.password, host=self.host)
         records = []
         with conn.cursor() as cursor:
-            cursor.execute('SELECT * FROM cases WHERE status = %s OR status = %s ORDER BY title',
-                           ('ожидаются правки плана консультации', 'ожидаются правки резолюции'))
+            cursor.execute('SELECT * FROM cases WHERE (status = %s OR status = %s) AND (s_id = %s) ORDER BY title',
+                           ('ожидаются правки плана консультации', 'ожидаются правки резолюции', student_id))
             records = cursor.fetchall()
         conn.close()
         cases = []
@@ -340,8 +340,44 @@ class DataBase:
             dbname=self.name, user=self.user, password=self.password, host=self.host)
         records = []
         with conn.cursor() as cursor:
-            cursor.execute('SELECT * FROM cases WHERE status = %s OR status = %s ORDER BY title',
-                           ('ожидается проверка правок плана консультации', 'ожидается проверка правок резолюции'))
+            cursor.execute('SELECT * FROM cases WHERE (status = %s OR status = %s) AND (t_id = %s) ORDER BY title',
+                           ('ожидается проверка правок плана консультации', 'ожидается проверка правок резолюции', teacher_id))
+            records = cursor.fetchall()
+        conn.close()
+        cases = []
+        if len(records) > 0:
+            for rec in records:
+                case = Case(rec)
+                cases.append(case)
+            return cases
+        else:
+            return None
+
+    def get_student_completed_cases(self, student_id):
+        conn = psycopg2.connect(
+            dbname=self.name, user=self.user, password=self.password, host=self.host)
+        records = []
+        with conn.cursor() as cursor:
+            cursor.execute('SELECT * FROM cases WHERE (status = %s) AND (s_id = %s) ORDER BY title',
+                           ('завершено', student_id))
+            records = cursor.fetchall()
+        conn.close()
+        cases = []
+        if len(records) > 0:
+            for rec in records:
+                case = Case(rec)
+                cases.append(case)
+            return cases
+        else:
+            return None
+
+    def get_teacher_completed_cases(self, teacher_id):
+        conn = psycopg2.connect(
+            dbname=self.name, user=self.user, password=self.password, host=self.host)
+        records = []
+        with conn.cursor() as cursor:
+            cursor.execute('SELECT * FROM cases WHERE (status = %s) AND (t_id = %s) ORDER BY title',
+                           ('завершено', teacher_id))
             records = cursor.fetchall()
         conn.close()
         cases = []
