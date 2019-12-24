@@ -6,12 +6,14 @@ from jcSupplicantClass import Supplicant
 from jcCaseClass import Case
 from jcPointsEventClass import PointsEvent
 from jcDocumentsClass import Document
+from jcDutyClass import Duty
 
 from usersQueries import UsersQuery
 from pointsQueries import PointsQuery
 from caseQueries import CaseQuery
 from supplicantQueries import SupplicantQuery
 from documentQueries import DocumentQuery
+from dutyQueries import DutyQuery
 
 from db_config import DB
 
@@ -170,3 +172,21 @@ class DataBase:
     def delete_document_by_id(self, document_id):
         q = DocumentQuery()
         return q.delete_document_by_id(document_id)
+
+    """"""
+
+    def insert_duty(self, duty):
+        q = DutyQuery()
+        return q.insert_duty(duty)
+
+    def get_duty_by_id(self, duty_id):
+        q = DutyQuery()
+        return q.get_duty_by_id(duty_id)
+
+    def get_duties_by_s_id(self, student_id):
+        q = DutyQuery()
+        return q.get_duties_by_s_id(student_id)
+
+    def delete_duty_by_id(self, duty_id):
+        q = DutyQuery()
+        return q.delete_duty_by_id(duty_id)
