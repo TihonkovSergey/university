@@ -113,6 +113,14 @@ class DataBase:
         q = CaseQuery()
         return q.get_cases_which_need_teacher_editing(teacher_id)
 
+    def get_all_completed_cases(self):
+        q = CaseQuery()
+        return q.get_all_completed_cases()
+
+    def get_all_cases_waiting_for_appointment(self):
+        q = CaseQuery()
+        return q.get_all_cases_waiting_for_appointment()
+
     def get_student_completed_cases(self, student_id):
         q = CaseQuery()
         return q.get_student_completed_cases(student_id)

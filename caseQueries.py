@@ -210,3 +210,39 @@ class CaseQuery:
             return cases
         else:
             return None
+
+    def get_all_completed_cases(self):
+        conn = psycopg2.connect(
+            dbname=self.name, user=self.user, password=self.password, host=self.host)
+        records = []
+        with conn.cursor() as cursor:
+            cursor.execute(
+                'SELECT * FROM cases WHERE status = %s', ('завершено', ))
+            records = cursor.fetchall()
+        conn.close()
+        cases = []
+        if len(records) > 0:
+            for rec in records:
+                case = Case(rec)
+                cases.append(case)
+            return cases
+        else:
+            return None
+
+    def get_all_cases_waiting_for_appointment(self):
+        conn = psycopg2.connect(
+            dbname=self.name, user=self.user, password=self.password, host=self.host)
+        records = []
+        with conn.cursor() as cursor:
+            cursor.execute(
+                'SELECT * FROM cases WHERE status = %s', ('ожидает назначения ответственных', ))
+            records = cursor.fetchall()
+        conn.close()
+        cases = []
+        if len(records) > 0:
+            for rec in records:
+                case = Case(rec)
+                cases.append(case)
+            return cases
+        else:
+            return None
