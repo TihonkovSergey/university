@@ -82,3 +82,65 @@ class DutyQuery:
                 'DELETE FROM duty_feed WHERE duty_id = %s', (duty_id, ))
         conn.close()
         return duty_id
+
+    def update_duty_by_id(self, duty):
+        if self.get_duty_by_id(duty.duty_id) == None:
+            return None
+        duty_id = duty.duty_id
+        conn = psycopg2.connect(
+            dbname=self.name, user=self.user, password=self.password, host=self.host)
+        with conn.cursor() as cursor:
+            sql = """UPDATE duty_feed
+                        SET s_id = %s,
+                        date = %s,
+                        status = %s
+                        WHERE duty_id = %s"""
+            try:
+                # execute the UPDATE  statement
+
+                cursor.execute(
+                    sql, (duty.s_id, duty.date, duty.status, duty_id))
+                # get the number of updated rows
+                conn.commit()
+                # Close communication with the PostgreSQL database
+                cursor.close()
+            except (Exception, psycopg2.DatabaseError) as error:
+                print(error)
+
+    def get_prev_duties(self):
+        now = datetime.datetime.now()
+        conn = psycopg2.connect(
+            dbname=self.name, user=self.user, password=self.password, host=self.host)
+        records = []
+        with conn.cursor() as cursor:
+            cursor.execute('SELECT * FROM duty_feed WHERE (date < %s) ORDER BY date',
+                           (str(now), ))
+            records = cursor.fetchall()
+        conn.close()
+        duties = []
+        if len(records) > 0:
+            for rec in records:
+                duty = Duty(rec)
+                duties.append(duty)
+            return duties
+        else:
+            return None
+
+    def get_next_duties(self):
+        now = datetime.datetime.now()
+        conn = psycopg2.connect(
+            dbname=self.name, user=self.user, password=self.password, host=self.host)
+        records = []
+        with conn.cursor() as cursor:
+            cursor.execute('SELECT * FROM duty_feed WHERE (date >= %s) ORDER BY date',
+                           (str(now)[:10], ))
+            records = cursor.fetchall()
+        conn.close()
+        duties = []
+        if len(records) > 0:
+            for rec in records:
+                duty = Duty(rec)
+                duties.append(duty)
+            return duties
+        else:
+            return None

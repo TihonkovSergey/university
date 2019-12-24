@@ -177,3 +177,21 @@ class UsersQuery:
             return users
         else:
             return None
+
+    def get_teachers_by_competence(self, competence):
+        conn = psycopg2.connect(
+            dbname=self.name, user=self.user, password=self.password, host=self.host)
+        records = []
+        with conn.cursor() as cursor:
+            cursor.execute('SELECT * FROM users WHERE competence = %s ORDER BY name',
+                           (competence, ))
+            records = cursor.fetchall()
+        conn.close()
+        users = []
+        if len(records) > 0:
+            for rec in records:
+                user = User(rec)
+                users.append(user)
+            return users
+        else:
+            return None

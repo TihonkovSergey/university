@@ -61,6 +61,10 @@ class DataBase:
         q = UsersQuery()
         return q.get_dispatchers()
 
+    def get_teachers_by_competence(self, competence):
+        q = UsersQuery()
+        return q.get_teachers_by_competence(competence)
+
     """"""
 
     def insert_points_event(self, points_events):
@@ -190,3 +194,15 @@ class DataBase:
     def delete_duty_by_id(self, duty_id):
         q = DutyQuery()
         return q.delete_duty_by_id(duty_id)
+
+    def update_duty_by_id(self, duty):
+        q = DutyQuery()
+        return q.update_duty_by_id(duty)
+
+    def get_prev_duties(self):
+        q = DutyQuery()
+        return q.get_prev_duties()
+
+    def get_next_duties(self):
+        q = DutyQuery()
+        return q.get_next_duties()
