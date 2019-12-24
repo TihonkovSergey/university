@@ -44,7 +44,7 @@ def show_my_duties(main_user):
         select = list(lbox.curselection())
         if len(select) and curr_duties:
             select_duty = curr_duties[ select[0] ]
-            # вызвать удаление дежурства
+            #TODO: вызвать удаление дежурства
             show_duties()
         else:
             label['text'] = "Выберите дежурство!"
@@ -55,7 +55,7 @@ def show_my_duties(main_user):
         if len(select) and curr_duties:
             select_duty = curr_duties[ select[0] ]
             root.destroy()
-            windows_init.show_add_points_window(main_user, select_duty) #TODO: сменить на изменение дежурного
+            #windows_init.show_add_points_window(main_user, select_duty) #TODO: добавить переход на изменение дежурного
         else:
             label['text'] = "Выберите дежурство!"
 

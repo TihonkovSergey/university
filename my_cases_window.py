@@ -36,8 +36,7 @@ def show_my_cases(main_user):
         lbox.delete(0,tk.END)
         global curr_cases
         if main_user.type == "тьютор":
-            pass
-            #cases = get_cases_by_cat_for_id() # TODO: требующие добавления ответственных
+            curr_cases = db.get_all_cases_waiting_for_appointment()
         elif main_user.type == "преподаватель":
             curr_cases = db.get_cases_which_need_teacher_editing(main_user.id)
         else:
@@ -52,7 +51,7 @@ def show_my_cases(main_user):
         global curr_cases
         if main_user.type == "тьютор":
             pass
-            #cases = get_cases_by_cat_for_id() # TODO: все законченные
+            curr_cases = db.get_all_completed_cases()
         elif main_user.type == "преподаватель":
             curr_cases = db.get_teacher_completed_cases(main_user.id)
         else:
