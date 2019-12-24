@@ -80,7 +80,7 @@ class PointsQuery:
                 for p in points_events:
                     now = datetime.datetime.now()
                     values.append(
-                        (p.points, p.s_id, p.t_id, p.reason, str(now)))
+                        (float(p.points), p.s_id, p.t_id, p.reason, str(now)))
                 insert = sql.SQL('INSERT INTO points_feed(points, s_id, t_id, reason, date_time) VALUES {}').format(
                     sql.SQL(',').join(map(sql.Literal, values))
                 )
