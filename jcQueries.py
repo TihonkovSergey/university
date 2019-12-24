@@ -5,11 +5,13 @@ from psycopg2 import sql
 from jcSupplicantClass import Supplicant
 from jcCaseClass import Case
 from jcPointsEventClass import PointsEvent
+from jcDocumentsClass import Document
 
 from usersQueries import UsersQuery
 from pointsQueries import PointsQuery
 from caseQueries import CaseQuery
 from supplicantQueries import SupplicantQuery
+from documentQueries import DocumentQuery
 
 from db_config import DB
 
@@ -89,9 +91,9 @@ class DataBase:
 
     """"""
 
-    def insert_cases(self, cases, disp_id, suppl_id):
+    def insert_cases(self, cases):
         q = CaseQuery()
-        return q.insert_cases(cases, disp_id, suppl_id)
+        return q.insert_cases(cases)
 
     def get_case_by_id(self, id):
         q = CaseQuery()
@@ -150,3 +152,21 @@ class DataBase:
     def delete_supplicant_by_id(self, id):
         q = SupplicantQuery()
         return q.delete_supplicant_by_id(id)
+
+    """"""
+
+    def insert_document(self, document):
+        q = DocumentQuery()
+        return q.insert_document(document)
+
+    def get_document_by_id(self, document_id):
+        q = DocumentQuery()
+        return q.get_document_by_id(document_id)
+
+    def get_documents_by_case_id(self, case_id):
+        q = DocumentQuery()
+        return q.get_documents_by_case_id(case_id)
+
+    def delete_document_by_id(self, document_id):
+        q = DocumentQuery()
+        return q.delete_document_by_id(document_id)

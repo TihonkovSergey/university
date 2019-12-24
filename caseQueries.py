@@ -16,7 +16,7 @@ class CaseQuery:
         self.password = db.password
         self.host = db.host
 
-    def insert_cases(self, cases, disp_id, suppl_id):
+    def insert_cases(self, cases):
         conn = psycopg2.connect(
             dbname=self.name, user=self.user, password=self.password, host=self.host)
         try:
@@ -27,7 +27,7 @@ class CaseQuery:
                     now = datetime.datetime.now()
                     values.append(
                         (c.category, c.title, c.description, None, None, "ожидает назначения ответственных",
-                            suppl_id, disp_id, str(now)))
+                            c.supplicant_id, c.dispatcher_id, str(now)))
                 insert = sql.SQL('INSERT INTO cases(category, title, description, s_id, t_id, status, supplicant_id, dispatcher_id, last_update) VALUES {}').format(
                     sql.SQL(',').join(map(sql.Literal, values))
                 )
