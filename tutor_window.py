@@ -21,7 +21,8 @@ def show_tutor(main_user):
     
     root = tk.Tk()
     root.resizable(False, False)
-    root.title("Добро пожаловать, тьютор")
+    root.title("Добро пожаловать, тьютор " + main_user.name)
+    
     screen_width = root.winfo_screenwidth() // 2 - 320 
     screen_height = root.winfo_screenheight() // 2 - 210 
     root.geometry('640x420+{}+{}'.format(screen_width, screen_height))

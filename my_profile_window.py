@@ -33,8 +33,6 @@ def show_my_profile(main_user):
     root.geometry('640x420+{}+{}'.format(screen_width, screen_height))
 
     db = DataBase()
-    db.name = "postgres"      #TODO: delete this
-    db.password = "postgres"  #TODO: delete this
 
     if (main_user.type == "админ"):
         e_name = tk.Entry(width=40)

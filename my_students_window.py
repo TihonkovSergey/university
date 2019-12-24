@@ -54,7 +54,7 @@ def show_my_students(main_user):
             lbox.insert(tk.END, "Ничего не найдено")
             curr_students = []
         for st in curr_students:
-            lbox.insert(tk.END,st.name + " " + str(st.points))
+            lbox.insert(tk.END,st.name + " " + st.competence + " " + str(st.points))
     
     def add_points():
         global curr_students
@@ -84,8 +84,6 @@ def show_my_students(main_user):
     root.geometry('640x420+{}+{}'.format(screen_width, screen_height))
 
     db = DataBase()
-    db.name = "postgres"      #TODO: delete this
-    db.password = "postgres"  #TODO: delete this
 
     var = tk.IntVar()
     var.set(0)
@@ -119,4 +117,5 @@ def show_my_students(main_user):
     label.pack()
     b_back.pack(side=tk.RIGHT)
 
+    show_students()
     root.mainloop()

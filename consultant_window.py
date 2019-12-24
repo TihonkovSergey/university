@@ -17,14 +17,12 @@ def show_consultant(main_user):
         windows_init.show_my_points_window(main_user)    
     root = tk.Tk()
     root.resizable(False, False)
-    root.title("Добро пожаловать, консультант")
+    root.title("Добро пожаловать, консультант " + main_user.name)
     screen_width = root.winfo_screenwidth() // 2 - 320 
     screen_height = root.winfo_screenheight() // 2 - 210 
     root.geometry('640x420+{}+{}'.format(screen_width, screen_height))
 
     db = DataBase()
-    db.name = "postgres"      #TODO: delete this
-    db.password = "postgres"  #TODO: delete this
 
     b_im = tk.Button(text="Мой профиль", command=show_my_profile)
     b_show_my_cases = tk.Button(text="Мои дела", command=show_my_cases)
