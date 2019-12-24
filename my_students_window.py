@@ -13,7 +13,8 @@ def show_my_students(main_user):
             root.destroy()
             windows_init.show_tutor_window(main_user)
         else:
-            pass #TODO: переход на страничку консультанта/диспетчера
+            root.destroy()
+            windows_init.show_admin_window(main_user)
     def show_students():
         lbox.delete(0,tk.END)
         global curr_students
@@ -112,7 +113,8 @@ def show_my_students(main_user):
     r_by_p_d.pack()
     b_show_students.pack(side="top")
     lbox.pack(side="top")
-    b_add_points.pack()
+    if main_user.type != "админ":
+        b_add_points.pack()
     b_show_profile.pack()
     label.pack()
     b_back.pack(side=tk.RIGHT)

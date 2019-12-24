@@ -30,7 +30,8 @@ def show_login(main_user):
                 root.destroy()
                 windows_init.show_dispatcher_window(main_user)
             elif user.type == "админ":
-                pass #TODO: сделать переход на страницу админа
+                root.destroy()
+                windows_init.show_admin_window(main_user)
             elif user.type == "тьютор":
                 root.destroy()
                 windows_init.show_tutor_window(main_user)

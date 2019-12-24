@@ -20,9 +20,12 @@ def show_my_profile(main_user):
         elif main_user.type == "тьютор":
             root.destroy()
             windows_init.show_tutor_window(main_user)
-        else:
+        elif main_user.type == "студент" and main_user.competence == "диспетчер":
             root.destroy()
             windows_init.show_dispatcher_window(main_user)
+        else:
+            root.destroy()
+            windows_init.show_admin_window(main_user)
             
 
     root = tk.Tk()

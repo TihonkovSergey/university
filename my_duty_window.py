@@ -19,8 +19,6 @@ def show_my_duties(main_user):
         lbox.delete(0,tk.END)
         global curr_duties
         if var.get() == 0:
-            pass #TODO: показать все 
-        elif var.get() == 1:
             pass #TODO: запланированные
         else: 
             pass #TODO: прошедшие
@@ -65,9 +63,8 @@ def show_my_duties(main_user):
 
     var = tk.IntVar()
     var.set(0)
-    r_all = tk.Radiobutton(text="Все", variable=var, value=0)
-    r_prev = tk.Radiobutton(text="Прошедшие", variable=var, value=1)
-    r_curr = tk.Radiobutton(text="Запланированные", variable=var, value=2)
+    r_prev = tk.Radiobutton(text="Прошедшие", variable=var, value=0)
+    r_curr = tk.Radiobutton(text="Запланированные", variable=var, value=1)
 
     b_show_duties = tk.Button(text="Показать", compound=tk.TOP, command=show_duties)
     b_change_der = tk.Button(text="Изменить дежурного", command=change_der)
@@ -77,7 +74,6 @@ def show_my_duties(main_user):
     lbox = tk.Listbox(width = 40, height = 10)
     label = tk.Label(width=40)
 
-    r_all.pack()
     r_curr.pack()
     r_prev.pack()
     b_show_duties.pack(side="top")

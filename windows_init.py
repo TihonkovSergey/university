@@ -11,6 +11,8 @@ import tutor_window
 import my_duty_window
 import dispatcher_window
 import my_points_window
+import admin_window
+import my_teachers_window
 
 def show_login(main_user):
     login_window.show_login(main_user)
@@ -50,3 +52,9 @@ def show_dispatcher_window(main_user):
 
 def show_my_points_window(main_user):
     my_points_window.show_points(main_user)
+
+def show_admin_window(main_user):
+    admin_window.show_admin(main_user)
+
+def show_my_teachers_window(main_user):
+    my_teachers_window.show_my_teachers(main_user)

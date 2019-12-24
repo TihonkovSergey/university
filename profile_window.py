@@ -18,8 +18,13 @@ def show_profile(main_user, user):
         elif main_user.type == "тьютор": 
             root.destroy()
             windows_init.show_tutor_window(main_user)
+        elif main_user.type == "студент" and main_user.competence == "диспетчер":
+            root.destroy()
+            windows_init.show_dispatcher_window(main_user)
         else:
-            pass #TODO: перейти на страницу диспетчера
+            root.destroy()
+            windows_init.show_admin_window(main_user)
+            
 
     root = tk.Tk()
     root.resizable(False, False)

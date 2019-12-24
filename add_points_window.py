@@ -8,7 +8,7 @@ def show_add_points(main_user, user):
         root.destroy()
         windows_init.show_my_students(main_user)
     
-    def add():  # TODO: дописать
+    def add():  
         user.points = max(user.points + float(varAsTxt.get()), 0.0)
         db.update_user_by_id(user)
         points_event = PointsEvent(("id", varAsTxt.get(), user.id, main_user.id, var_reason.get(), ""))
