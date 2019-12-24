@@ -9,6 +9,8 @@ import consultant_window
 import add_points_window
 import tutor_window
 import my_duty_window
+import dispatcher_window
+import my_points_window
 
 def show_login(main_user):
     login_window.show_login(main_user)
@@ -42,3 +44,9 @@ def show_tutor_window(main_user):
 
 def show_my_duties(main_user):
     my_duty_window.show_my_duties(main_user)
+
+def show_dispatcher_window(main_user):
+    dispatcher_window.show_dispatcher(main_user)
+
+def show_my_points_window(main_user):
+    my_points_window.show_points(main_user)
