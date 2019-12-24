@@ -4,7 +4,8 @@ import windows_init
 
 def show_my_profile(main_user):
     def save():
-        main_user.name = e_name.get()
+        if main_user.type == "админ":
+            main_user.name = e_name.get()
         main_user.password = e_password.get()
         db.update_user_by_id(main_user)
         go_back()
@@ -30,8 +31,12 @@ def show_my_profile(main_user):
     db.name = "postgres"      #TODO: delete this
     db.password = "postgres"  #TODO: delete this
 
-    e_name = tk.Entry(width=40)
-    e_name.insert(0, main_user.name)
+    if (main_user.type == "админ"):
+        e_name = tk.Entry(width=40)
+        e_name.insert(0, main_user.name)
+    else:
+        l_name = tk.Label(width=40)
+        l_name['text'] = main_user.name
 
     l_comp = tk.Label(text=main_user.competence)
     l_login = tk.Label(text=main_user.login)
@@ -45,7 +50,10 @@ def show_my_profile(main_user):
     b_save = tk.Button(text="Сохранить и выйти", command=save)
     b_back = tk.Button(text="Назад", command=go_back)
     
-    e_name.pack()
+    if main_user.type == "админ":
+        e_name.pack()
+    else:
+        l_name.pack()
     l_comp.pack()
     l_login.pack()
     e_password.pack()
