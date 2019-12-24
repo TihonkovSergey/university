@@ -60,7 +60,8 @@ def show_my_students(main_user):
         select = list(lbox.curselection())
         if len(select) and curr_students:
             select_user = curr_students[ select[0] ]
-            label['text'] = select_user.name #TODO: добавить переход на страничку отсыпки баллов
+            root.destroy()
+            windows_init.show_add_points_window(main_user, select_user)
         else:
             label['text'] = "Выберите студента!"
     

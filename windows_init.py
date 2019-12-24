@@ -6,6 +6,7 @@ import my_profile_window
 import profile_window
 import case_window
 import consultant_window
+import add_points_window 
 
 def show_login(main_user):
     login_window.show_login(main_user)
@@ -30,3 +31,6 @@ def show_case_window(main_user, case):
 
 def show_consultant_window(main_user):
     consultant_window.show_consultant(main_user)
+
+def show_add_points_window(main_user, user):
+    add_points_window.show_add_points(main_user, user)
