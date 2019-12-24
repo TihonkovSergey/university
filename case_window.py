@@ -10,14 +10,8 @@ def show_case(main_user, case):
         go_back()
     
     def go_back():
-        if main_user.type == "преподаватель":
-            root.destroy()
-            windows_init.show_teacher(main_user)
-        elif main_user.type == "студент":
-            root.destroy()
-            windows_init.show_consultant_window(main_user)
-        else:
-            pass #TODO: перейти на страницу тьютора
+        root.destroy()
+        windows_init.show_my_cases(main_user)
     
     def add_doc(): #TODO: добавить диалоговое окно с добавлением документа
         b_add_doc['text'] = "Добавляет документ"
@@ -30,8 +24,6 @@ def show_case(main_user, case):
     root.geometry('640x420+{}+{}'.format(screen_width, screen_height))
 
     db = DataBase()
-    db.name = "postgres"      #TODO: delete this
-    db.password = "postgres"  #TODO: delete this
 
     e_title = tk.Entry(width=50)
     e_title.insert(0, case.title)
@@ -78,7 +70,7 @@ def show_case(main_user, case):
 
     b_add_doc = tk.Button(text="Прикрепить документ", command=add_doc)
     b_save = tk.Button(text="Сохранить и выйти", command=save)
-    b_back = tk.Button(text="На главную", command=go_back)
+    b_back = tk.Button(text="Назад", command=go_back)
     
     e_title.pack()
     l_category.pack()

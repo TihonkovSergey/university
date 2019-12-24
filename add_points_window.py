@@ -5,14 +5,9 @@ from jcPointsEventClass import PointsEvent
 
 def show_add_points(main_user, user):
     def go_back():
-        if main_user.type == "преподаватель":
-            root.destroy()
-            windows_init.show_my_students(main_user)
-        elif main_user.type == "тьютор":
-            pass #TODO: переход на страничку тьютора
-        else: # какая-то ошибка
-            root.destroy()
-            windows_init.show_login(main_user)
+        root.destroy()
+        windows_init.show_my_students(main_user)
+    
     def add():  # TODO: дописать
         user.points = max(user.points + float(varAsTxt.get()), 0.0)
         db.update_user_by_id(user)
@@ -21,6 +16,7 @@ def show_add_points(main_user, user):
         db.insert_points_event(list_events)
         l_exp['text'] = varAsTxt.get()
         go_back()
+    
     def onSelect(val):
         sender = val.widget
         idx = sender.curselection()

@@ -30,6 +30,9 @@ def show_login(main_user):
                 pass #TODO: сделать переход на страницу диспетчера
             elif user.type == "админ":
                 pass #TODO: сделать переход на страницу админа
+            elif user.type == "тьютор":
+                root.destroy()
+                windows_init.show_tutor_window(main_user)
             else:
                 except_label['text'] = "Неизвестная роль!"
     root = tk.Tk()

@@ -10,7 +10,8 @@ def show_my_cases(main_user):
             root.destroy()
             windows_init.show_teacher(main_user)
         elif main_user.type == "тьютор":
-            pass #TODO: переход на страничку тьютора
+            root.destroy()
+            windows_init.show_tutor_window(main_user)
         elif main_user.type == "студент":
             root.destroy()
             windows_init.show_consultant_window(main_user)

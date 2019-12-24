@@ -15,8 +15,11 @@ def show_profile(main_user, user):
         elif main_user.type == "студент" and main_user.competence == "консультант":
             root.destroy()
             windows_init.show_consultant_window(main_user)
-        else: #TODO: перейти на страницу диспетчера
-            pass #TODO: перейти на страницу тьютора
+        elif main_user.type == "тьютор": 
+            root.destroy()
+            windows_init.show_tutor_window(main_user)
+        else:
+            pass #TODO: перейти на страницу диспетчера
 
     root = tk.Tk()
     root.resizable(False, False)
