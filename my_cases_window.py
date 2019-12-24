@@ -79,10 +79,8 @@ def show_my_cases(main_user):
     root.geometry('640x420+{}+{}'.format(screen_width, screen_height))
 
     db = DataBase()
-    db.name = "postgres"      #TODO: delete this
-    db.password = "postgres"  #TODO: delete this
 
-    b_all_cases = tk.Button(text="Показать", compound=tk.TOP, command=show_all)
+    b_all_cases = tk.Button(text="Все дела", compound=tk.TOP, command=show_all)
     b_check_cases = tk.Button(text="Требующие подтверждения дела", command=show_check)
     if main_user.type == "студент":
         b_check_cases = tk.Button(text="Требующие доработки дела")
@@ -100,4 +98,5 @@ def show_my_cases(main_user):
     label.pack()
     b_back.pack(side=tk.RIGHT)
 
+    show_all()
     root.mainloop()

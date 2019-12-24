@@ -27,7 +27,8 @@ def show_login(main_user):
                 root.destroy()
                 windows_init.show_consultant_window(main_user)
             elif user.type == "студент" and user.competence == "диспетчер":
-                pass #TODO: сделать переход на страницу диспетчера
+                root.destroy()
+                windows_init.show_dispatcher_window(main_user)
             elif user.type == "админ":
                 pass #TODO: сделать переход на страницу админа
             elif user.type == "тьютор":
