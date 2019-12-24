@@ -21,7 +21,8 @@ def show_my_profile(main_user):
             root.destroy()
             windows_init.show_tutor_window(main_user)
         else:
-            pass #TODO: перейти на страницу диспетчера
+            root.destroy()
+            windows_init.show_dispatcher_window(main_user)
             
 
     root = tk.Tk()

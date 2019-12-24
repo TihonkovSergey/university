@@ -13,16 +13,17 @@ def show_my_duties(main_user):
             root.destroy()
             windows_init.show_tutor_window(main_user)
         else:
-            pass #TODO: переход на страничку диспетчера
+            root.destroy()
+            windows_init.show_dispatcher_window(main_user)
     def show_duties():
         lbox.delete(0,tk.END)
         global curr_duties
         if var.get() == 0:
-            pass
+            pass #TODO: показать все 
         elif var.get() == 1:
-            pass
-        else:
-            pass
+            pass #TODO: запланированные
+        else: 
+            pass #TODO: прошедшие
         if not curr_duties:
             lbox.insert(tk.END, "Ничего не найдено")
             curr_students = []
@@ -30,14 +31,7 @@ def show_my_duties(main_user):
             lbox.insert(tk.END,st.name + " " + str(st.points))
     
     def add_duty():
-        global curr_duties
-        select = list(lbox.curselection())
-        if len(select) and curr_duties:
-            select_duty = curr_duties[ select[0] ]
-            root.destroy()
-            windows_init.show_add_points_window(main_user, select_duty) #TODO: сменить на добавление дежурства
-        else:
-            label['text'] = "Выберите дежурство!"
+        pass #TODO: добавить переход на добавление дежурства
 
     def del_duty():
         global curr_duties
@@ -90,6 +84,7 @@ def show_my_duties(main_user):
     lbox.pack(side="top")
     if main_user.type == "тьютор":
         b_add_duty.pack()
+        b_change_der.pack()
         b_del_duty.pack()
     label.pack()
     b_back.pack(side=tk.RIGHT)

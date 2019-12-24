@@ -14,8 +14,7 @@ def show_consultant(main_user):
         windows_init.show_my_profile(main_user)
     def show_my_points():
         root.destroy()
-        #TODO: переход в окно Мои баллы
-    
+        windows_init.show_my_points_window(main_user)    
     root = tk.Tk()
     root.resizable(False, False)
     root.title("Добро пожаловать, консультант")
