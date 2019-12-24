@@ -113,7 +113,7 @@ class PointsQuery:
         with conn.cursor() as cursor:
             conn.autocommit = True
             cursor.execute(
-                'SELECT * FROM points_feed WHERE s_id = %s', (student_id, ))
+                'SELECT * FROM points_feed WHERE s_id = %s ORDER BY date_time', (student_id, ))
             records = cursor.fetchall()
         conn.close()
         events = []
@@ -132,7 +132,7 @@ class PointsQuery:
         with conn.cursor() as cursor:
             conn.autocommit = True
             cursor.execute(
-                'SELECT * FROM points_feed WHERE t_id = %s', (teacher_id, ))
+                'SELECT * FROM points_feed WHERE t_id = %s ORDER BY date_time', (teacher_id, ))
             records = cursor.fetchall()
         conn.close()
         events = []
