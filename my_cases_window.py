@@ -83,7 +83,7 @@ def show_my_cases(main_user):
     b_all_cases = tk.Button(text="Все дела", compound=tk.TOP, command=show_all)
     b_check_cases = tk.Button(text="Требующие подтверждения дела", command=show_check)
     if main_user.type == "студент":
-        b_check_cases = tk.Button(text="Требующие доработки дела")
+        b_check_cases = tk.Button(text="Требующие доработки дела", command=show_check)
     b_finished_cases = tk.Button(text="Завершенные дела", command=show_finished)
     b_back = tk.Button(text="Назад", command=go_back)
     lbox = tk.Listbox(width = 40, height = 10)
