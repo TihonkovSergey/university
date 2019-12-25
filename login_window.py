@@ -41,7 +41,7 @@ def show_login(main_user):
     root = tk.Tk()
     root.resizable(False, False)
     screen_width = root.winfo_screenwidth() // 2 - 200  # 2 - 150
-    screen_height = root.winfo_screenheight() // 2 - 100  # 2 - 50
+    screen_height = root.winfo_screenheight() // 2 - 65  # 2 - 50
     root.geometry('400x130+{}+{}'.format(screen_width, screen_height))
     root.title("Авторизация")
 
@@ -52,6 +52,7 @@ def show_login(main_user):
     enter_password = tk.Entry()
     b_enter = tk.Button(text="Войти", command=try_login)
     except_label = tk.Label(width=40)
+
     except_label['text'] = "Введите логин и пароль"
 
     enter_login.place(x=125, y=30,
