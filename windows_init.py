@@ -13,6 +13,7 @@ import dispatcher_window
 import my_points_window
 import admin_window
 import my_teachers_window
+import add_case_window
 
 def show_login(main_user):
     login_window.show_login(main_user)
@@ -58,3 +59,6 @@ def show_admin_window(main_user):
 
 def show_my_teachers_window(main_user):
     my_teachers_window.show_my_teachers(main_user)
+
+def show_add_case_window(main_user):
+    add_case_window.add_case(main_user)

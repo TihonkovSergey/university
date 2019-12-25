@@ -15,6 +15,10 @@ def show_dispatcher(main_user):
     def show_my_points():
         root.destroy()
         windows_init.show_my_points_window(main_user)
+
+    def show_add_case():
+        root.destroy()
+        windows_init.show_add_case_window(main_user)
     
     root = tk.Tk()
     root.resizable(False, False)
@@ -28,11 +32,13 @@ def show_dispatcher(main_user):
     b_im = tk.Button(text="Мой профиль", command=show_my_profile)
     b_my_duties = tk.Button(text="Мои дежурства", command=show_my_duties)
     b_my_points = tk.Button(text="Мои баллы", command=show_my_points)
+    b_add_case = tk.Button(text="Добавить обращение", command=show_add_case)
     b_login = tk.Button(text="Выйти из аккаунта", command=leave_akk)
     
     b_im.pack(side="top")
     b_my_duties.pack(side="top")
     b_my_points.pack(side="top")
+    b_add_case.pack(side="top")
     b_login.pack(side=tk.RIGHT)
     
     root.mainloop()
