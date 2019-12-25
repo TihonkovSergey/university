@@ -1,6 +1,11 @@
 import tkinter as tk
 from jcQueries import DataBase
 import windows_init
+from tkinter import messagebox as mb
+from tkinter import filedialog as fd
+from jcDocumentsClass import Document
+
+curr_docs = []
 
 def show_case(main_user, case):
     def save():
@@ -28,7 +33,24 @@ def show_case(main_user, case):
         windows_init.show_case_window(main_user, case)
     
     def add_doc(): #TODO: добавить диалоговое окно с добавлением документа
-        b_add_doc['text'] = "Добавляет документ"
+        file_name = fd.askopenfilename(filetypes=(("Text FILES", "*.txt"),
+                                                        ("All files", "*.*") ))
+        if not file_name:
+            mb.showerror("Ошибка", "Вы не выбрали файл!")
+        file_path_list = file_name.split("/")
+        doc = Document((file_name, file_path_list[-1], case.case_id))
+        db.insert_document(doc)
+        refresh_docs()
+
+    def refresh_docs():
+        lb_docs.delete(0, tk.END)
+        global curr_docs
+        curr_docs = db.get_documents_by_case_id(case.case_id)
+        if not curr_docs:
+            lb_docs.insert(tk.END, "Нет документов")
+            curr_docs = []
+        for d in curr_docs:
+            lb_docs.insert(tk.END, d.title)
 
     def add_cons_teach():
         root.destroy()
@@ -95,6 +117,8 @@ def show_case(main_user, case):
     else:
         b_confirm = tk.Button(text="Принять правки", command=confirm)
 
+    lb_docs = tk.Listbox(width = 40, height = 10)
+
     b_add_doc = tk.Button(text="Прикрепить документ", command=add_doc)
     b_save = tk.Button(text="Сохранить и выйти", command=save)
     b_back = tk.Button(text="Назад", command=go_back)
@@ -111,9 +135,12 @@ def show_case(main_user, case):
     l_last_update.pack()
  
     b_confirm.pack()
+    
+    lb_docs.pack()
 
     b_add_doc.pack()
     b_save.pack(side="bottom")
     b_back.pack(side=tk.RIGHT)
 
+    refresh_docs()
     root.mainloop()
