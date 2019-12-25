@@ -34,7 +34,6 @@ def show_teacher(main_user):
     b_show_my_cases = tk.Button(text="Мои дела", command=show_my_cases)
     b_login = tk.Button(text="Выйти из аккаунта", command=leave_akk)
 
-    b_im.pack(side="top")
     b_im.place(x=0, y=0, width=420, height=40)
     b_show_my_cases.place(x=0, y=40, width=420, height=40)
     b_show_my_students.place(x=0, y=80, width=420, height=40)
