@@ -16,27 +16,28 @@ class CaseQuery:
         self.password = db.password
         self.host = db.host
 
-    def insert_cases(self, cases):
+    def insert_case(self, case):
         conn = psycopg2.connect(
             dbname=self.name, user=self.user, password=self.password, host=self.host)
         try:
             conn.autocommit = True
             with conn.cursor() as cursor:
                 values = []
-                for c in cases:
-                    now = datetime.datetime.now()
-                    values.append(
-                        (c.category, c.title, c.description, None, None, "ожидает назначения ответственных",
-                            c.supplicant_id, c.dispatcher_id, str(now)))
-                insert = sql.SQL('INSERT INTO cases(category, title, description, s_id, t_id, status, supplicant_id, dispatcher_id, last_update) VALUES {}').format(
+                now = datetime.datetime.now()
+                values.append(
+                    (case.category, case.title, case.description, None, None, "ожидает назначения ответственных",
+                     case.supplicant_id, case.dispatcher_id, str(now)))
+                insert = sql.SQL('INSERT INTO cases(category, title, description, s_id, t_id, status, supplicant_id, dispatcher_id, last_update) VALUES {} RETURNING case_id').format(
                     sql.SQL(',').join(map(sql.Literal, values))
                 )
                 cursor.execute(insert)
+                id_of_new_row = cursor.fetchone()[0]
         except (Exception, psycopg2.DatabaseError) as error:
             print(error)
             return error
         finally:
             conn.close()
+            return id_of_new_row
 
     def get_case_by_id(self, id):
         conn = psycopg2.connect(

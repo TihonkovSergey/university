@@ -10,8 +10,7 @@ class User:
         self.login = str(user[4])
         self.password = str(user[5])
         self.personal_data = str(user[6])
-        if (self.personal_data == "None"):
-            self.personal_data = "{}"
+        self.personal_data = "{}"
         self.points = float(user[7])
 
     def __str__(self):

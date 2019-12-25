@@ -97,9 +97,9 @@ class DataBase:
 
     """"""
 
-    def insert_cases(self, cases):
+    def insert_case(self, cases):
         q = CaseQuery()
-        return q.insert_cases(cases)
+        return q.insert_case(cases)
 
     def get_case_by_id(self, id):
         q = CaseQuery()
@@ -147,9 +147,9 @@ class DataBase:
 
     """"""
 
-    def insert_supplicant(self, supplicants):
+    def insert_supplicant(self, supplicant):
         q = SupplicantQuery()
-        return q.insert_supplicant(supplicants)
+        return q.insert_supplicant(supplicant)
 
     def get_supplicant_by_id(self, id):
         q = SupplicantQuery()

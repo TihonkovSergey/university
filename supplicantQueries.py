@@ -16,25 +16,26 @@ class SupplicantQuery:
         self.password = db.password
         self.host = db.host
 
-    def insert_supplicant(self, supplicants):
+    def insert_supplicant(self, supplicant):
         conn = psycopg2.connect(
             dbname=self.name, user=self.user, password=self.password, host=self.host)
         try:
             conn.autocommit = True
             with conn.cursor() as cursor:
                 values = []
-                for s in supplicants:
-                    values.append(
-                        (s.name, s.telephone_number))
-                insert = sql.SQL('INSERT INTO supplicants(name, telephone_number) VALUES {}').format(
+                values.append(
+                    (supplicant.name, supplicant.telephone_number))
+                insert = sql.SQL('INSERT INTO supplicants(name, telephone_number) VALUES {} RETURNING supplicant_id').format(
                     sql.SQL(',').join(map(sql.Literal, values))
                 )
                 cursor.execute(insert)
+                id_of_new_row = cursor.fetchone()[0]
         except (Exception, psycopg2.DatabaseError) as error:
             print(error)
             return error
         finally:
             conn.close()
+            return id_of_new_row
 
     def get_supplicant_by_id(self, id):
         conn = psycopg2.connect(
