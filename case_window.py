@@ -30,8 +30,9 @@ def show_case(main_user, case):
     def add_doc(): #TODO: добавить диалоговое окно с добавлением документа
         b_add_doc['text'] = "Добавляет документ"
 
-    def add_cons_teach(): #TODO: переход на окно добавления куратора и консультанта 
-        pass
+    def add_cons_teach():
+        root.destroy()
+        windows_init.show_add_cons_teach_window(main_user, case)
 
     root = tk.Tk()
     root.resizable(False, False)
