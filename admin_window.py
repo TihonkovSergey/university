@@ -46,7 +46,8 @@ def show_admin(main_user):
         f_logs.close()
     
     def insert_user():
-        pass #TODO: переход на страницу заполнения данных
+        root.destroy()
+        windows_init.show_add_one_user_window(main_user)
 
     root = tk.Tk()
     root.resizable(False, False)
