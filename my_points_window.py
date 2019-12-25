@@ -37,9 +37,12 @@ def show_points(main_user):
         elif main_user.type == "тьютор":
             root.destroy()
             windows_init.show_tutor_window(main_user)
-        elif main_user.type == "студент":
+        elif main_user.type == "студент" and main_user.competence == "консультант":
             root.destroy()
             windows_init.show_consultant_window(main_user)
+        elif main_user.type == "студент" and main_user.competence == "диспетчер":
+            root.destroy()
+            windows_init.show_dispatcher_window(main_user)
         else: # какая-то ошибка
             root.destroy()
             windows_init.show_login(main_user)
