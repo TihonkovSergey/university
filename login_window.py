@@ -2,6 +2,7 @@ import tkinter as tk
 from jcQueries import DataBase
 import windows_init
 
+
 def show_login(main_user):
     def try_login():
         login = enter_login.get()
@@ -39,11 +40,11 @@ def show_login(main_user):
                 except_label['text'] = "Неизвестная роль!"
     root = tk.Tk()
     root.resizable(False, False)
-    screen_width = root.winfo_screenwidth() // 2 - 150 
-    screen_height = root.winfo_screenheight() // 2 - 50 
-    root.geometry('300x100+{}+{}'.format(screen_width, screen_height))
+    screen_width = root.winfo_screenwidth() // 2 - 200  # 2 - 150
+    screen_height = root.winfo_screenheight() // 2 - 100  # 2 - 50
+    root.geometry('400x130+{}+{}'.format(screen_width, screen_height))
     root.title("Авторизация")
-    
+
     db = DataBase()
 
     enter_login = tk.Entry()
@@ -51,10 +52,17 @@ def show_login(main_user):
     enter_password = tk.Entry()
     b_enter = tk.Button(text="Войти", command=try_login)
     except_label = tk.Label(width=40)
+    except_label['text'] = "Введите логин и пароль"
 
-    enter_login.pack(side="top")
-    enter_password.pack(side="top")
-    b_enter.pack(side="top")
+    enter_login.place(x=125, y=30,
+                      width=150, height=25)
+    # enter_login.pack(side="top")
+    enter_password.place(x=125, y=60,
+                         width=150, height=25)
+    # enter_password.pack(side="top")
+    # b_enter.pack(side="top")
+    b_enter.place(x=165, y=90,
+                  width=70, height=30)
     except_label.pack(side="top")
 
     root.mainloop()
