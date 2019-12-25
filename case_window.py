@@ -32,15 +32,23 @@ def show_case(main_user, case):
         root.destroy()
         windows_init.show_case_window(main_user, case)
     
-    def add_doc(): #TODO: добавить диалоговое окно с добавлением документа
+    def add_doc():
         file_name = fd.askopenfilename(filetypes=(("Text FILES", "*.txt"),
                                                         ("All files", "*.*") ))
-        if not file_name:
-            mb.showerror("Ошибка", "Вы не выбрали файл!")
-        file_path_list = file_name.split("/")
-        doc = Document((file_name, file_path_list[-1], case.case_id))
-        db.insert_document(doc)
-        refresh_docs()
+        if not db.get_document_by_id(Document(file_name, "", "")):
+            if not file_name:
+                mb.showerror("Ошибка", "Вы не выбрали файл!")
+                return
+            file_path_list = file_name.split("/")
+            doc = Document((file_name, file_path_list[-1], case.case_id))
+            error = db.insert_document(doc)
+            if error:
+                mb.showerror("Ошибка", "Один и тот же документ не может быть прикреплен к разным делам")
+                return
+            refresh_docs()
+        else:
+            mb.showerror("Ошибка", "Один и тот же документ не может быть прикреплен к разным делам")
+            return
 
     def refresh_docs():
         lb_docs.delete(0, tk.END)
@@ -56,12 +64,34 @@ def show_case(main_user, case):
         root.destroy()
         windows_init.show_add_cons_teach_window(main_user, case)
 
+    def open_doc():
+        global curr_docs
+        select = list(lb_docs.curselection())
+        if len(select) and curr_docs:
+            select_doc = curr_docs[select[0]]
+        else:
+            mb.showerror("Ошибка","Выберите документ")
+            return
+        root.destroy()
+        windows_init.show_document_window(main_user, case, select_doc)
+    
+    def delete_doc():
+        global curr_docs
+        select = list(lb_docs.curselection())
+        if len(select) and curr_docs:
+            select_doc = curr_docs[ select[0] ]
+        else:
+            mb.showerror("Ошибка","Выберите документ")
+            return
+        db.delete_document_by_id(select_doc.document_id)
+        refresh_docs()
+
     root = tk.Tk()
     root.resizable(False, False)
     root.title(case.title)
     screen_width = root.winfo_screenwidth() // 2 - 320 
-    screen_height = root.winfo_screenheight() // 2 - 320 
-    root.geometry('640x640+{}+{}'.format(screen_width, screen_height))
+    screen_height = root.winfo_screenheight() // 2 - 420 
+    root.geometry('640x840+{}+{}'.format(screen_width, screen_height))
 
     db = DataBase()
 
@@ -120,6 +150,8 @@ def show_case(main_user, case):
     lb_docs = tk.Listbox(width = 40, height = 10)
 
     b_add_doc = tk.Button(text="Прикрепить документ", command=add_doc)
+    b_open_doc = tk.Button(text="Открыть документ", command=open_doc)
+    b_del_doc = tk.Button(text="Удалить документ", command=delete_doc)
     b_save = tk.Button(text="Сохранить и выйти", command=save)
     b_back = tk.Button(text="Назад", command=go_back)
     
@@ -139,6 +171,8 @@ def show_case(main_user, case):
     lb_docs.pack()
 
     b_add_doc.pack()
+    b_open_doc.pack()
+    b_del_doc.pack()
     b_save.pack(side="bottom")
     b_back.pack(side=tk.RIGHT)
 

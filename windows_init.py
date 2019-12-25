@@ -15,6 +15,7 @@ import admin_window
 import my_teachers_window
 import add_case_window
 import add_cons_teach_window
+import document_window
 
 def show_login(main_user):
     login_window.show_login(main_user)
@@ -66,3 +67,6 @@ def show_add_case_window(main_user):
 
 def show_add_cons_teach_window(main_user, case):
     add_cons_teach_window.add_cons_teach(main_user, case)
+
+def show_document_window(main_user, case, doc):
+    document_window.show_document(main_user, case, doc)
