@@ -29,7 +29,6 @@ def show_admin(main_user):
         if not file_name:
             mb.showerror("Ошибка", "Вы не выбрали файл!")
             return
-        #print(file_name) 
         f = open(file_name)
         new_data = json.load(f)
         f.close()
@@ -45,7 +44,10 @@ def show_admin(main_user):
         f_logs = open("D:/homeworks/university_databases/logs.txt", "w")
         f_logs.write(logs_str)
         f_logs.close()
-            
+    
+    def insert_user():
+        pass #TODO: переход на страницу заполнения данных
+
     root = tk.Tk()
     root.resizable(False, False)
     root.title("Добро пожаловать, админ " + main_user.name)
@@ -59,12 +61,14 @@ def show_admin(main_user):
     b_im = tk.Button(text="Мой профиль", command=show_my_profile)
     b_show_students  = tk.Button(text="Студенты", command=show_students)
     b_show_teachers = tk.Button(text="Преподаватели", command=show_teachers)
-    b_add_users = tk.Button(text="Добавить пользователей сайта", command=add_users)
+    b_insert_user = tk.Button(text="Добавить пользователя", command=insert_user)
+    b_add_users = tk.Button(text="Добавить пользователей из файла", command=add_users)
     b_login = tk.Button(text="Выйти из аккаунта", command=leave_akk)
     
     b_im.pack(side="top")
     b_show_students.pack(side="top")
     b_show_teachers.pack(side="top")
+    b_insert_user.pack(side="top")
     b_add_users.pack(side="top")
     b_login.pack(side=tk.RIGHT)
     

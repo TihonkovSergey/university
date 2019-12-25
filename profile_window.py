@@ -14,17 +14,22 @@ def show_profile(main_user, user):
                     ("а" <= c <= "я") or ("А"<= c <= "Я") or c==" "):
                 mb.showerror("Ошибка", "Имя должно содержать только буквы!")
                 return
-
-        login = e_login.get()
-
-        if len(login) < 4:
-            mb.showerror("Ошибка", "Логин должен быть длиннее 4 символов!")
-            return
-        
-        for c in login:
-            if not (("a" <= c <= "z") or ("A" <= c <= "Z") or ("0" <= c <= "9")):
-                mb.showerror("Ошибка", "Логин должен содержать только латинские буквы и цифры!")
+        if main_user.type == "админ":
+            login = e_login.get()
+            u = db.get_user_by_login(login)
+            if u and u.login != user.login:
+                mb.showerror("Ошибка", "Данный логин уже существует!")
                 return
+
+            if len(login) < 4:
+                mb.showerror("Ошибка", "Логин должен быть длиннее 4 символов!")
+                return
+            
+            for c in login:
+                if not (("a" <= c <= "z") or ("A" <= c <= "Z") or ("0" <= c <= "9")):
+                    mb.showerror("Ошибка", "Логин должен содержать только латинские буквы и цифры!")
+                    return
+            user.login = login
 
         user.name = name
         
@@ -34,8 +39,6 @@ def show_profile(main_user, user):
                 user.competence = s_competence_list[select_comp[0]]
             else:
                 user.competence = t_competence_list[select_comp[0]]
-        
-        user.login = login
 
         db.update_user_by_id(user)
         go_back()
