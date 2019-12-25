@@ -33,7 +33,7 @@ def show_my_profile(main_user):
     root.title("Мой профиль")
     screen_width = root.winfo_screenwidth() // 2 - 210
     screen_height = root.winfo_screenheight() // 2 - 120
-    root.geometry('420x237+{}+{}'.format(screen_width, screen_height))
+    root.geometry('420x235+{}+{}'.format(screen_width, screen_height))
 
     db = DataBase()
 
