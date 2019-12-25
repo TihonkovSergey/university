@@ -57,11 +57,8 @@ def show_login(main_user):
 
     enter_login.place(x=125, y=30,
                       width=150, height=25)
-    # enter_login.pack(side="top")
     enter_password.place(x=125, y=60,
                          width=150, height=25)
-    # enter_password.pack(side="top")
-    # b_enter.pack(side="top")
     b_enter.place(x=165, y=90,
                   width=70, height=30)
     except_label.pack(side="top")
