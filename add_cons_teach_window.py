@@ -41,9 +41,10 @@ def add_cons_teach(main_user, case):
             mb.showerror("Ошибка", "Выберите консультанта")
             return
         case.status = "ожидаются правки плана консультации"
-        case.s_id = select_students[0].id
-        case.t_id = select_teachers[0].id
+        case.s_id = curr_students[select_students[0]].id
+        case.t_id = curr_teachers[select_teachers[0]].id
         db.update_case_by_id(case)
+        go_back()
 
     root = tk.Tk()
     root.resizable(False, False)
@@ -55,8 +56,8 @@ def add_cons_teach(main_user, case):
     db = DataBase()
     
     b_back = tk.Button(text="Назад", command=go_back)
-    t_lbox = tk.Listbox(width = 40, height = 10)
-    s_lbox = tk.Listbox(width = 40, height = 10)
+    t_lbox = tk.Listbox(exportselection=0, width = 40, height = 10)
+    s_lbox = tk.Listbox(exportselection=0, width = 40, height = 10)
     b_ok = tk.Button(text="OK", command=ok)
 
     t_lbox.pack(side="top")
