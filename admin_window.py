@@ -1,6 +1,10 @@
 import tkinter as tk
 from jcQueries import DataBase
 import windows_init
+from tkinter import filedialog as fd 
+from tkinter import messagebox as mb
+import json
+from jcUserClass import User
 
 def show_admin(main_user):
     def leave_akk():
@@ -20,8 +24,28 @@ def show_admin(main_user):
         windows_init.show_my_teachers_window(main_user)
     
     def add_users():
-        pass #TODO: переход на диалоговое окно выбора файла для добавления новых пользователей
-    
+        file_name = fd.askopenfilename(filetypes=(("Json FILES", "*.json"),
+                                                        ("All files", "*.*") ))
+        if not file_name:
+            mb.showerror("Ошибка", "Вы не выбрали файл!")
+            return
+        #print(file_name) 
+        f = open(file_name)
+        new_data = json.load(f)
+        f.close()
+        logs_str = ""
+        for data in new_data["users"]:
+            user = User((data["id"], data["name"], data["type"], data["competence"], data["login"], data["password"], data["personal_data"], data["points"]))
+            error = db.insert_users([user])
+            if error and error != None  and error != "None" and error != "null" and error != "none":
+                logs_str += "\n" + "User " + user.name + " not added: " + str(error)
+            else:
+                logs_str += "\n" + "User " + user.name + " successful added in database"
+        
+        f_logs = open("D:/homeworks/university_databases/logs.txt", "w")
+        f_logs.write(logs_str)
+        f_logs.close()
+            
     root = tk.Tk()
     root.resizable(False, False)
     root.title("Добро пожаловать, админ " + main_user.name)
