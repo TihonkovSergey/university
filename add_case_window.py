@@ -55,14 +55,14 @@ def add_case(main_user):
         case.description = description
         case.dispatcher_id = main_user.id
         
-        supp_id = db.insert_supplicant(supp)
-        if supp_id.is_digit():
+        supp_id = str(db.insert_supplicant(supp))
+        if supp_id.isdigit():
             case.supplicant_id = supp_id
         else:
             mb.showerror("Ошибка", "Ошибка в добавлении обратившегося! " + supp_id)
             return
-        case_id = db.insert_case(case)
-        if case_id.is_digit():
+        case_id = str(db.insert_case(case))
+        if case_id.isdigit():
             if var_doc.get():
                 file_name = fd.askopenfilename(filetypes=(("Text FILES", "*.txt"),
                                                         ("All files", "*.*") ))
