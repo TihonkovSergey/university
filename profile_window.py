@@ -3,6 +3,7 @@ from jcQueries import DataBase
 from tkinter import messagebox as mb
 import windows_init
 
+
 def show_profile(main_user, user):
     def save():
         name = e_name.get()
@@ -10,8 +11,8 @@ def show_profile(main_user, user):
             mb.showerror("Ошибка", "Имя должно быть длиннее 6 символов!")
             return
         for c in name:
-            if not (("a" <= c <= "z") or ("A" <= c <= "Z") or 
-                    ("а" <= c <= "я") or ("А"<= c <= "Я") or c==" "):
+            if not (("a" <= c <= "z") or ("A" <= c <= "Z") or
+                    ("а" <= c <= "я") or ("А" <= c <= "Я") or c == " "):
                 mb.showerror("Ошибка", "Имя должно содержать только буквы!")
                 return
         if main_user.type == "админ":
@@ -24,15 +25,16 @@ def show_profile(main_user, user):
             if len(login) < 4:
                 mb.showerror("Ошибка", "Логин должен быть длиннее 4 символов!")
                 return
-            
+
             for c in login:
                 if not (("a" <= c <= "z") or ("A" <= c <= "Z") or ("0" <= c <= "9")):
-                    mb.showerror("Ошибка", "Логин должен содержать только латинские буквы и цифры!")
+                    mb.showerror(
+                        "Ошибка", "Логин должен содержать только латинские буквы и цифры!")
                     return
             user.login = login
 
         user.name = name
-        
+
         select_comp = list(lb_comp.curselection())
         if len(select_comp):
             if user.type == "студент":
@@ -42,7 +44,7 @@ def show_profile(main_user, user):
 
         db.update_user_by_id(user)
         go_back()
-    
+
     def go_back():
         if main_user.type == "преподаватель":
             root.destroy()
@@ -50,7 +52,7 @@ def show_profile(main_user, user):
         elif main_user.type == "студент" and main_user.competence == "консультант":
             root.destroy()
             windows_init.show_consultant_window(main_user)
-        elif main_user.type == "тьютор": 
+        elif main_user.type == "тьютор":
             root.destroy()
             windows_init.show_my_students(main_user)
         elif main_user.type == "студент" and main_user.competence == "диспетчер":
@@ -70,25 +72,26 @@ def show_profile(main_user, user):
     root = tk.Tk()
     root.resizable(False, False)
     root.title(user.name)
-    screen_width = root.winfo_screenwidth() // 2 - 320 
-    screen_height = root.winfo_screenheight() // 2 - 210 
-    root.geometry('640x420+{}+{}'.format(screen_width, screen_height))
+    screen_width = root.winfo_screenwidth() // 2 - 210
+    screen_height = root.winfo_screenheight() // 2 - 120
+    root.geometry('420x247+{}+{}'.format(screen_width, screen_height))
 
-    t_competence_list = ["гражданское право", "трудовое право", "административное право", "жилищное право"]
+    t_competence_list = ["гражданское право", "трудовое право",
+                         "административное право", "жилищное право"]
     s_competence_list = ["консультант", "диспетчер"]
     db = DataBase()
 
-    label_name = tk.Label(text="Имя: ")
+    label_name = tk.Label(text="ФИО: ")
     if (main_user.type == "админ"):
         e_name = tk.Entry(width=40)
         e_name.insert(0, user.name)
     else:
         l_name = tk.Label(text=user.name, width=40)
-    
-    label_type = tk.Label(text="Тип: ")
+
+    label_type = tk.Label(text="ТИП: ")
     l_type = tk.Label(text=user.type)
 
-    label_comp = tk.Label(text="Компетенция: " + user.competence)
+    label_comp = tk.Label(text="КОМПЕТЕНЦИЯ: ")  # + user.competence)
     if main_user.type == "админ":
         if user.type == "студент":
             lb_comp = tk.Listbox(height=len(s_competence_list))
@@ -101,45 +104,50 @@ def show_profile(main_user, user):
     else:
         l_comp = tk.Label(text=user.competence)
 
-    label_login = tk.Label(text="Логин: ")
+    label_login = tk.Label(text="ЛОГИН: ")
     if main_user.type == "админ":
-        e_login  = tk.Entry(width=40)
+        e_login = tk.Entry(width=40)
         e_login.insert(0, user.login)
     else:
         l_login = tk.Label(text=user.login)
-    
-    l_points = tk.Label(text="Баллы: " + str(user.points))
+
+        #l_points = tk.Label(text="БАЛЛЫ: " + str(user.points))
+    label_points = tk.Label(text="БАЛЛЫ: ")
+    l_points = tk.Label(text=str(user.points))
 
     b_back = tk.Button(text="Назад", command=go_back)
     b_save = tk.Button(text="Сохранить и выйти", command=save)
-    
+
     label_name.pack()
-    if main_user.type == "админ": 
+    if main_user.type == "админ":
         e_name.pack()
     else:
         l_name.pack()
-    
+
     label_type.pack()
     l_type.pack()
-    
+
     label_comp.pack()
     if main_user.type == "админ":
         lb_comp.pack()
     else:
         l_comp.pack()
-    
+
     label_login.pack()
     if main_user.type == "админ":
         e_login.pack()
     else:
         l_login.pack()
-    
+
+    if user.type == "студент":
+        label_points.pack()
+
     if user.type == "студент":
         l_points.pack()
-    
+
     if main_user.type == "админ":
         b_save.pack(side="bottom")
-    
-    b_back.pack(side=tk.RIGHT)
+
+    b_back.place(x=0, y=227, width=40, height=20)
 
     root.mainloop()
