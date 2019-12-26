@@ -35,16 +35,13 @@ def show_case(main_user, case):
     def add_doc():
         file_name = fd.askopenfilename(filetypes=(("Text FILES", "*.txt"),
                                                         ("All files", "*.*") ))
-        if not db.get_document_by_id(Document(file_name, "", "")):
+        if not db.get_document_by_id(file_name):
             if not file_name:
                 mb.showerror("Ошибка", "Вы не выбрали файл!")
                 return
             file_path_list = file_name.split("/")
             doc = Document((file_name, file_path_list[-1], case.case_id))
             error = db.insert_document(doc)
-            if error:
-                mb.showerror("Ошибка", "Один и тот же документ не может быть прикреплен к разным делам")
-                return
             refresh_docs()
         else:
             mb.showerror("Ошибка", "Один и тот же документ не может быть прикреплен к разным делам")
