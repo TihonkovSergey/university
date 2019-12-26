@@ -1,6 +1,7 @@
 import tkinter as tk
 import windows_init
 from jcQueries import DataBase
+from tkinter import messagebox as mb 
 
 curr_teachers = []
 
@@ -27,7 +28,8 @@ def show_my_teachers(main_user):
                 curr_teachers = db.get_teachers_by_competence(
                     competence_list[select[0]])
         else:
-            pass  # TODO:label['text'] = "Выберите категорию"
+            mb.showerror("Ошибка", "Выберите категорию!")
+            return 
         if not curr_teachers:
             lbox.insert(tk.END, "Ничего не найдено")
             curr_teachers = []
@@ -42,7 +44,8 @@ def show_my_teachers(main_user):
             root.destroy()
             windows_init.show_profile(main_user, select_user)
         else:
-            pass  # TODO: label['text'] = "Выберите преподавателя!"
+            mb.showerror("Ошибка", "Выберите преподавателя!")
+            return
 
     def del_teacher():
         global curr_teachers
@@ -53,7 +56,8 @@ def show_my_teachers(main_user):
             show_teachers()
             return
         else:
-            pass  # TODO: label['text'] = "Выберите преподавателя!"
+            mb.showerror("Ошибка", "Выберите преподавателя!")
+            return
 
     root = tk.Tk()
     root.resizable(False, False)
