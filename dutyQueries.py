@@ -26,8 +26,8 @@ class DutyQuery:
             with conn.cursor() as cursor:
                 values = []
                 values.append(
-                    (duty.duty_id, duty.s_id, duty.date, "дежурство ожидается"))
-                insert = sql.SQL('INSERT INTO duty_feed(duty_id, s_id, date, status) VALUES {}').format(
+                    (duty.s_id, duty.date, "дежурство ожидается"))
+                insert = sql.SQL('INSERT INTO duty_feed(s_id, date, status) VALUES {}').format(
                     sql.SQL(',').join(map(sql.Literal, values))
                 )
                 cursor.execute(insert)
