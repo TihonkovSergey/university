@@ -20,7 +20,11 @@ def add_cons_teach(main_user, case):
             t_lbox.insert(tk.END, "Не найдено подходящих кураторов")
             curr_teachers = []
         for t in curr_teachers:
-            t_lbox.insert(tk.END, t.name)
+            case_number = 0
+            t_cases = db.get_cases_by_teacher_id(t.id)
+            if t_cases and t_cases != "None" and t_cases != "null":
+                case_number = len(t_cases)
+            t_lbox.insert(tk.END, t.name + " (" + str(case_number) + ")")
 
     def show_student():
         global curr_students
