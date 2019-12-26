@@ -70,6 +70,17 @@ class CaseQuery:
         else:
             return None
 
+    def delete_case_by_case_id(self, case_id):
+        if self.get_case_by_id(case_id) == None:
+            return None
+        conn = psycopg2.connect(
+            dbname=self.name, user=self.user, password=self.password, host=self.host)
+        with conn.cursor() as cursor:
+            conn.autocommit = True
+            cursor.execute('DELETE FROM cases WHERE case_id = %s', (case_id, ))
+        conn.close()
+        return case_id
+
     def update_case_by_id(self, case):
         if self.get_case_by_id(case.case_id) == None:
             return None
