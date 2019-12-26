@@ -22,7 +22,9 @@ def show_my_duties(main_user):
         lbox.delete(0, tk.END)
         global curr_duties
         if var.get() == 0:
-<<<<<<< HEAD
+
+
+<< << << < HEAD
             # curr_duties = db.get_ TODO: для конкретного студента
             curr_duties = db.get_prev_duties()
         else:
