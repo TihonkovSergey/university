@@ -4,6 +4,7 @@ from jcQueries import DataBase
 from tkinter import messagebox as mb
 from tkcalendar import DateEntry
 from jcDutyClass import Duty
+import datetime
 
 curr_students = []
 
@@ -18,6 +19,9 @@ def add_duty(main_user):
         select = list(t_lbox.curselection())
         if len(select) < 1 or not curr_students:
             mb.showerror("Ошибка", "Выберите диспетчера!")
+            return
+        if str(datetime.datetime.now()).split()[0] > str(date):
+            mb.showerror("Ошибка", "Невозможно запланировать дежурство в прошлом!")
             return
         selected_s = curr_students[select[0]]
         duty = Duty(("", "", "", ""))

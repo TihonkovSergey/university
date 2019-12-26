@@ -4,6 +4,7 @@ from jcQueries import DataBase
 from tkinter import messagebox as mb
 from tkcalendar import DateEntry
 from jcDutyClass import Duty
+import datetime
 
 curr_students = []
 
