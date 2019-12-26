@@ -26,6 +26,11 @@ def show_document(main_user, case, doc):
     db = DataBase()
 
     text = tk.Text(width=50, height=25)
+    f = open(doc.document_id, "r")
+    curr_text = f.read()
+    f.close()
+    text.insert(0.0, curr_text)
+
     b_save = tk.Button(text="Сохранить и выйти", command=save)
     b_back = tk.Button(text="Назад", command=go_back)
 
