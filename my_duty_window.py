@@ -22,25 +22,17 @@ def show_my_duties(main_user):
         lbox.delete(0, tk.END)
         global curr_duties
         if var.get() == 0:
-
-
-<< << << < HEAD
-            # curr_duties = db.get_ TODO: для конкретного студента
-            curr_duties = db.get_prev_duties()
-        else:
-            # TODO: для конкретного студента
-            curr_duties = db.get_next_duties()
-=======
             if main_user.type == "студент":
-                curr_duties = db.get_prev_duties_for_particular_student(main_user.id)
+                curr_duties = db.get_prev_duties_for_particular_student(
+                    main_user.id)
             else:
                 curr_duties = db.get_prev_duties()
-        else: 
+        else:
             if main_user.type == "студент":
-                curr_duties = db.get_next_duties_for_particular_student(main_user.id)
+                curr_duties = db.get_next_duties_for_particular_student(
+                    main_user.id)
             else:
                 curr_duties = db.get_next_duties()
->>>>>>> 7b87b496bbf9e48b03b3a8f93cae7455fa783fd3
         if not curr_duties:
             lbox.insert(tk.END, "Ничего не найдено")
             curr_duties = []
@@ -66,8 +58,8 @@ def show_my_duties(main_user):
     root = tk.Tk()
     root.resizable(False, False)
     root.title("Мои дежурства")
-    screen_width = root.winfo_screenwidth() // 2 - 320
-    screen_height = root.winfo_screenheight() // 2 - 210
+    screen_width = root.winfo_screenwidth() // 2 - 240
+    screen_height = root.winfo_screenheight() // 2 - 125
     root.geometry('480x250+{}+{}'.format(screen_width, screen_height))
 
     db = DataBase()
