@@ -10,10 +10,6 @@ from jcDocumentsClass import Document
 from tkcalendar import DateEntry
 import datetime
 
-db = DataBase()
-now = datetime.datetime.now()
-print(str(now).split()[0])
-
 data = {
     "users": [
         {
@@ -158,16 +154,6 @@ data = {
         },
         {
             "id": "id",
-            "name": "Иванов Денис Юрьевич",
-            "type": "админ",
-            "competence": "юридическая клиника",
-            "login": "admin",
-            "password": "1111",
-                        "personal_data": "",
-                        "points": "0.0"
-        },
-        {
-            "id": "id",
             "name": "Ионова Алина Евшеньевна",
             "type": "студент",
             "competence": "консультант",
@@ -188,24 +174,28 @@ data = {
         }
     ]
 }
+user = User(("id", "Иванов Денис Юрьевич", "админ", "юридическая клиника", "admin", "1111", "" , "0.0"))
+db = DataBase()
+db.insert_users([user])
 
-"""file_name = fd.askopenfilename(filetypes=(("Json FILES", "*.json"),
+"""
+file_name = fd.askopenfilename(filetypes=(("Json FILES", "*.json"),
                                                         ("All files", "*.*") ))
 if not file_name:
 	mb.showerror("Ошибка", "Вы не выбрали файл!")
 file_path_list = file_name.split("/")
 print(file_path_list[-1])
 # doc = Document((file_name,))
-"""
-"""
+
+
 file_name = fd.askopenfilename()
 
 
 with open(file_name, "w") as write_file:
     json.dump(data, write_file)
-
+"""
 # file_name = "D:/homeworks/university_databases/add_users.json"
-
+"""
 file_name = fd.askopenfilename()
 print(file_name)
 f = open(file_name)
@@ -218,8 +208,8 @@ for data in new_data["users"]:
 		user = User((data["id"], data["name"], data["type"], data["competence"],
 		            data["login"], data["password"], data["personal_data"], data["points"]))
 		print(user.name)
-# print(new_data["users"][0])
-"""
+print(new_data["users"][0])"""
+
 """
 user = User(("id", "Главный Админ Админов", "админ",
             "админ", "admin", "0000", "", "0.0"))

@@ -101,5 +101,5 @@ def show_my_teachers(main_user):
 
     b_back.place(x=0, y=230, width=40, height=20)
 
-    show_teachers()
+    #show_teachers()
     root.mainloop()

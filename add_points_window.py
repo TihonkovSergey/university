@@ -36,8 +36,6 @@ def show_add_points(main_user, user):
     reason_list = ["Доклад"]
     if user.competence == "диспетчер":
         reason_list.append("Дежурство")
-    else:
-        reason_list.append("Завершенное дело")
     db = DataBase()
 
     # an MVC-trick an indirect value-holder

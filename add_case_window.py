@@ -80,7 +80,7 @@ def add_case(main_user):
                         return
                     file_path_list = file_name.split("/")
                     doc = Document(
-                        (file_name, file_path_list[-1], case.case_id))
+                        (file_name, file_path_list[-1], case_id))
                     db.insert_document(doc)
                     go_back()
                 else:
@@ -154,7 +154,7 @@ def add_case(main_user):
     label_description.pack()
     t_description.pack()
 
-    check_doc.pack()
+    #check_doc.pack()
 
     b_add.pack(side="bottom")
     b_back.place(x=0, y=540, width=40, height=20)
