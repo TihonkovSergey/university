@@ -96,7 +96,7 @@ def show_my_profile(main_user):
         e_login_text.pack(side="top")
 
         e_login = tk.Entry(width=40)
-        e_login.insert(0, main_user.name)
+        e_login.insert(0, main_user.login)
         e_login.pack(side="top")
 
     e_password_text = tk.Label(width=40)
