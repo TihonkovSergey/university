@@ -56,7 +56,11 @@ def add_one_user(main_user):
             mb.showerror("Ошибка", "Выберите компетенцию у пользователя!")
             return
 
-        user.password = e_password.get()
+        password = e_password.get()
+        if len(password) < 4:
+            mb.showerror("Ошибка", "Пароль должен быть длиннее 3 символов!")
+            return
+        user.password = password
         db.insert_users([user])
         go_back()
 

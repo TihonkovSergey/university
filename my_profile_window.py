@@ -1,13 +1,29 @@
 import tkinter as tk
 from jcQueries import DataBase
 import windows_init
-
+from tkinter import messagebox as mb 
 
 def show_my_profile(main_user):
     def save():
         if main_user.type == "админ":
-            main_user.name = e_name.get()
-        main_user.password = e_password.get()
+            name = e_name.get()
+            if len(name) < 6:
+                mb.showerror(
+                    "Ошибка", "Имя пользователя должно быть длиннее 5 символов!")
+                return
+
+            for c in name:
+                if not (("a" <= c <= "z") or ("A" <= c <= "Z") or
+                        ("а" <= c <= "я") or ("А" <= c <= "Я") or c == " "):
+                    mb.showerror(
+                        "Ошибка", "Имя пользователя должно содержать только буквы!")
+                    return
+            user.name = name
+        password = e_password.get()
+        if len(password) < 4:
+            mb.showerror("Ошибка", "Пароль должен быть длиннее 3 символов!")
+            return
+        user.password = password
         db.update_user_by_id(main_user)
         go_back()
 
