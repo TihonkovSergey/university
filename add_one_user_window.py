@@ -2,6 +2,7 @@ import tkinter as tk
 from jcQueries import DataBase
 import windows_init
 from tkinter import filedialog as fd 
+from tkinter import messagebox as mb 
 from jcUserClass import User
 
 
@@ -11,7 +12,50 @@ def add_one_user(main_user):
         windows_init.show_admin_window(main_user)
     
     def add():
-        pass #TODO: добавить нового пользователя в базу
+        user = User(("", "", "", "", "", "", "", "0.0"))
+        name = e_name.get()
+        if len(name) < 6:
+            mb.showerror("Ошибка", "Имя пользователя должно быть длиннее 5 символов!")
+            return
+
+        for c in name:
+            if not (("a" <= c <= "z") or ("A" <= c <= "Z") or 
+                    ("а" <= c <= "я") or ("А" <= c <= "Я") or c ==" "):
+                mb.showerror("Ошибка", "Имя пользователя должно содержать только буквы!")
+                return
+        user.name = name
+
+        login = e_login.get()
+        u = db.get_user_by_login(login)
+        if u and u.login != user.login:
+            mb.showerror("Ошибка", "Данный логин уже существует!")
+            return
+
+        if len(login) < 4:
+            mb.showerror("Ошибка", "Логин должен быть длиннее 4 символов!")
+            return
+        
+        for c in login:
+            if not (("a" <= c <= "z") or ("A" <= c <= "Z") or ("0" <= c <= "9")):
+                mb.showerror("Ошибка", "Логин должен содержать только латинские буквы и цифры!")
+                return
+        user.login = login
+
+        select_comp = list(lb_comp.curselection())
+        if len(select_comp):
+            if type_var.get():
+                user.competence = t_competence_list[select_comp[0]]
+                user.type = "преподаватель"
+            else:
+                user.competence = s_competence_list[select_comp[0]]
+                user.type = "студент"
+        else:
+            mb.showerror("Ошибка", "Выберите компетенцию у пользователя!")
+            return
+
+        user.password = e_password.get()
+        db.insert_users([user])
+        go_back() 
 
     def change():
         lb_comp.delete(0, tk.END)
