@@ -18,6 +18,7 @@ import add_cons_teach_window
 import document_window
 import add_one_user_window
 import add_duty
+import change_dispatcher_window
 
 def show_login(main_user):
     login_window.show_login(main_user)
@@ -78,3 +79,6 @@ def show_add_one_user_window(main_user):
 
 def show_add_duty(main_user):
     add_duty.add_duty(main_user)
+
+def show_change_dispatcher_window(main_user, duty):
+    change_dispatcher_window.change_disp(main_user, duty)
