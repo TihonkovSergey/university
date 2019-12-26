@@ -145,16 +145,6 @@ def show_case(main_user, case):
     l_last_update = tk.Label(width=40)
     l_last_update['text'] = "Последнее изменение: " + case.last_update[:min(10,len(case.last_update))]
 
-    
-    if ((main_user.type == "студент")
-            and (case.status == "ожидаются правки плана консультации" 
-            or case.status == "ожидаются правки резолюции")):
-        b_confirm = tk.Button(text="Отправить на проверку", command=confirm)
-    elif main_user.type == "тьютор" and case.status == "ожидает назначения ответственных":
-        b_confirm = tk.Button(text="Назначить консультанта и куратора", command=add_cons_teach)
-    else:
-        b_confirm = tk.Button(text="Принять правки", command=confirm)
-
     lb_docs = tk.Listbox(width = 40, height = 10)
 
     b_add_doc = tk.Button(text="Прикрепить документ", command=add_doc)
@@ -174,7 +164,17 @@ def show_case(main_user, case):
     l_disp.pack()
     l_last_update.pack()
  
-    b_confirm.pack()
+    if ((main_user.type == "студент")
+            and (case.status == "ожидаются правки плана консультации" 
+            or case.status == "ожидаются правки резолюции")):
+        b_confirm = tk.Button(text="Отправить на проверку", command=confirm)
+        b_confirm.pack()
+    elif main_user.type == "тьютор" and case.status == "ожидает назначения ответственных":
+        b_confirm = tk.Button(text="Назначить консультанта и куратора", command=add_cons_teach)
+        b_confirm.pack()
+    elif (main_user.type == "преподаватель") and (case.status == "ожидается проверка правок плана консультации" or case.status == "ожидается проверка правок резолюции"):
+        b_confirm = tk.Button(text="Принять правки", command=confirm)
+        b_confirm.pack()
     
     lb_docs.pack()
 
