@@ -20,8 +20,10 @@ def show_my_duties(main_user):
         lbox.delete(0,tk.END)
         global curr_duties
         if var.get() == 0:
+            #curr_duties = db.get_ TODO: для конкретного студента
             curr_duties = db.get_prev_duties()
         else: 
+            # TODO: для конкретного студента
             curr_duties = db.get_next_duties()
         if not curr_duties:
             lbox.insert(tk.END, "Ничего не найдено")
@@ -35,24 +37,13 @@ def show_my_duties(main_user):
         root.destroy()
         windows_init.show_add_duty(main_user)
 
-    def del_duty():
-        global curr_duties
-        select = list(lbox.curselection())
-        if len(select) and curr_duties:
-            select_duty = curr_duties[ select[0] ]
-            db.delete_duty_by_id(select_duty.duty_id)
-            show_duties()
-        else:
-            mb.showerror("Ошибка","Выберите дежурство!")
-
-
     def change_der():
         global curr_duties
         select = list(lbox.curselection())
         if len(select) and curr_duties:
             select_duty = curr_duties[ select[0] ]
             root.destroy()
-            #windows_init.show_add_points_window(main_user, select_duty) #TODO: добавить переход на изменение дежурного
+            windows_init.show_change_dispatcher_window(main_user, select_duty)
         else:
             mb.showerror("Ошибка","Выберите дежурство!")
 
@@ -67,14 +58,13 @@ def show_my_duties(main_user):
     db = DataBase()
 
     var = tk.IntVar()
-    var.set(0)
+    var.set(1)
     r_prev = tk.Radiobutton(text="Прошедшие", variable=var, value=0)
     r_curr = tk.Radiobutton(text="Запланированные", variable=var, value=1)
 
     b_show_duties = tk.Button(text="Показать", compound=tk.TOP, command=show_duties)
-    b_change_der = tk.Button(text="Изменить дежурного", command=change_der)
+    b_change_der = tk.Button(text="Изменить дежурство", command=change_der)
     b_add_duty = tk.Button(text="Добавить дежурство", command=add_duty)
-    b_del_duty = tk.Button(text="Удалить дежурство", command=del_duty)
     b_back = tk.Button(text="Назад", command=go_back)
     lbox = tk.Listbox(width = 40, height = 10)
     label = tk.Label(width=40)
@@ -86,7 +76,6 @@ def show_my_duties(main_user):
     if main_user.type == "тьютор":
         b_add_duty.pack()
         b_change_der.pack()
-        b_del_duty.pack()
     label.pack()
     b_back.pack(side=tk.RIGHT)
 
