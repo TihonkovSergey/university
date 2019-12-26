@@ -1,6 +1,7 @@
 import tkinter as tk
 import windows_init
 from jcQueries import DataBase
+from tkinter import messagebox as mb 
 
 curr_students = []
 
@@ -68,7 +69,8 @@ def show_my_students(main_user):
             root.destroy()
             windows_init.show_add_points_window(main_user, select_user)
         else:
-            pass  # """"""
+            mb.showerror("Ошибка", "Выберите студента!")
+            return
 
     def show_profile():
         global curr_students
@@ -78,7 +80,8 @@ def show_my_students(main_user):
             root.destroy()
             windows_init.show_profile(main_user, select_user)
         else:
-            pass  # """"""
+            mb.showerror("Ошибка", "Выберите студента!")
+            return
 
     root = tk.Tk()
     root.resizable(False, False)
