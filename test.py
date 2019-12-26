@@ -18,10 +18,10 @@ data = {
     "users": [
 		{
 			"id": "id",
-			"name": "Сергей",
+			"name": "Сергеев Сергей Консультантов",
 			"type": "студент",
 			"competence": "консультант",
-			"login": "st1",
+			"login": "st111111",
 			"password": "0000",
 			"personal_data": "",
 			"points" : "0.0"
@@ -142,6 +142,16 @@ data = {
 			"type": "преподаватель",
 			"competence": "административное право",
 			"login": "st385627",
+			"password": "0000",
+			"personal_data": "",
+			"points" : "0.0"
+		},
+		{
+			"id": "id",
+			"name": "Купцова Ольга Михайловна",
+			"type": "тьютор",
+			"competence": "юридическая клиника",
+			"login": "tutor",
 			"password": "0000",
 			"personal_data": "",
 			"points" : "0.0"
