@@ -5,6 +5,9 @@ import numpy as np
 from jcCaseClass import Case
 from jcSupplicantClass import Supplicant
 from tkinter import messagebox as mb
+from tkinter import filedialog as fd 
+from jcDocumentsClass import Document
+import string
 
 def add_case(main_user):
     def add():
@@ -52,16 +55,31 @@ def add_case(main_user):
         case.description = description
         case.dispatcher_id = main_user.id
         
-        supp_id = db.insert_supplicant([supp]) # TODO: после того как будет 
-                                             # доработано проверить рааботоспособность
-        case.supplicant_id = supp_id
-        case.supplicant_id = "1" #TODO: убрать
-
-        case_id = db.insert_cases([case])
-
-        if var_doc.get():
-            pass #TODO: прикрепление документа (выбрана галочка)
-
+        supp_id = db.insert_supplicant(supp)
+        if supp_id.is_digit():
+            case.supplicant_id = supp_id
+        else:
+            mb.showerror("Ошибка", "Ошибка в добавлении обратившегося! " + supp_id)
+            return
+        case_id = db.insert_case(case)
+        if case_id.is_digit():
+            if var_doc.get():
+                file_name = fd.askopenfilename(filetypes=(("Text FILES", "*.txt"),
+                                                        ("All files", "*.*") ))
+                if not db.get_document_by_id(file_name):
+                    if not file_name:
+                        mb.showerror("Ошибка", "Вы не выбрали файл!")
+                        return
+                    file_path_list = file_name.split("/")
+                    doc = Document((file_name, file_path_list[-1], case.case_id))
+                    db.insert_document(doc)
+                    go_back()
+                else:
+                    mb.showerror("Ошибка", "Один и тот же документ не может быть прикреплен к разным делам")
+                    return
+        else:
+            mb.showerror("Ошибка", "Ошибка в добавлении дела! " + case_id)
+            return
         go_back()
     
     def go_back():
