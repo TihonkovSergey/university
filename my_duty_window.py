@@ -20,11 +20,15 @@ def show_my_duties(main_user):
         lbox.delete(0,tk.END)
         global curr_duties
         if var.get() == 0:
-            #curr_duties = db.get_ TODO: для конкретного студента
-            curr_duties = db.get_prev_duties()
+            if main_user.type == "студент":
+                curr_duties = db.get_prev_duties_for_particular_student(main_user.id)
+            else:
+                curr_duties = db.get_prev_duties()
         else: 
-            # TODO: для конкретного студента
-            curr_duties = db.get_next_duties()
+            if main_user.type == "студент":
+                curr_duties = db.get_next_duties_for_particular_student(main_user.id)
+            else:
+                curr_duties = db.get_next_duties()
         if not curr_duties:
             lbox.insert(tk.END, "Ничего не найдено")
             curr_duties = []
