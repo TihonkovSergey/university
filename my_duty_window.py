@@ -1,6 +1,7 @@
 import tkinter as tk
 import windows_init
 from jcQueries import DataBase
+from tkinter import messagebox as mb
 
 curr_duties = []
 
@@ -19,27 +20,31 @@ def show_my_duties(main_user):
         lbox.delete(0,tk.END)
         global curr_duties
         if var.get() == 0:
-            pass #TODO: запланированные
+            curr_duties = db.get_prev_duties()
         else: 
-            pass #TODO: прошедшие
+            curr_duties = db.get_next_duties()
         if not curr_duties:
             lbox.insert(tk.END, "Ничего не найдено")
-            curr_students = []
-        for st in curr_duties:
-            lbox.insert(tk.END,st.name + " " + str(st.points))
+            curr_duties = []
+
+        for dut in curr_duties:
+            user = db.get_user_by_id(dut.s_id)
+            lbox.insert(tk.END, user.name + " " + dut.date)
     
     def add_duty():
-        pass #TODO: добавить переход на добавление дежурства
+        root.destroy()
+        windows_init.show_add_duty(main_user)
 
     def del_duty():
         global curr_duties
         select = list(lbox.curselection())
         if len(select) and curr_duties:
             select_duty = curr_duties[ select[0] ]
-            #TODO: вызвать удаление дежурства
+            db.delete_duty_by_id(select_duty.duty_id)
             show_duties()
         else:
-            label['text'] = "Выберите дежурство!"
+            mb.showerror("Ошибка","Выберите дежурство!")
+
 
     def change_der():
         global curr_duties
@@ -49,7 +54,7 @@ def show_my_duties(main_user):
             root.destroy()
             #windows_init.show_add_points_window(main_user, select_duty) #TODO: добавить переход на изменение дежурного
         else:
-            label['text'] = "Выберите дежурство!"
+            mb.showerror("Ошибка","Выберите дежурство!")
 
 
     root = tk.Tk()
