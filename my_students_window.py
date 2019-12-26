@@ -4,6 +4,7 @@ from jcQueries import DataBase
 
 curr_students = []
 
+
 def show_my_students(main_user):
     def go_back():
         if main_user.type == "преподаватель":
@@ -15,8 +16,9 @@ def show_my_students(main_user):
         else:
             root.destroy()
             windows_init.show_admin_window(main_user)
+
     def show_students():
-        lbox.delete(0,tk.END)
+        lbox.delete(0, tk.END)
         global curr_students
         if var.get() == 0:
             if var_order.get() == 0:
@@ -28,7 +30,7 @@ def show_my_students(main_user):
                 if not sts:
                     curr_students = []
                 else:
-                    curr_students=sts[::-1]
+                    curr_students = sts[::-1]
         elif var.get() == 1:
             if var_order.get() == 0:
                 curr_students = db.get_consultants()
@@ -55,18 +57,19 @@ def show_my_students(main_user):
             lbox.insert(tk.END, "Ничего не найдено")
             curr_students = []
         for st in curr_students:
-            lbox.insert(tk.END,st.name + " " + st.competence + " " + str(st.points))
-    
+            lbox.insert(tk.END, st.name + " " +
+                        st.competence + " " + str(st.points))
+
     def add_points():
         global curr_students
         select = list(lbox.curselection())
         if len(select) and curr_students:
-            select_user = curr_students[ select[0] ]
+            select_user = curr_students[select[0]]
             root.destroy()
             windows_init.show_add_points_window(main_user, select_user)
         else:
-            label['text'] = "Выберите студента!"
-    
+            pass  # """"""
+
     def show_profile():
         global curr_students
         select = list(lbox.curselection())
@@ -75,14 +78,14 @@ def show_my_students(main_user):
             root.destroy()
             windows_init.show_profile(main_user, select_user)
         else:
-            label['text'] = "Выберите студента!"
+            pass  # """"""
 
     root = tk.Tk()
     root.resizable(False, False)
     root.title("Мои студенты")
-    screen_width = root.winfo_screenwidth() // 2 - 320 
-    screen_height = root.winfo_screenheight() // 2 - 210 
-    root.geometry('640x420+{}+{}'.format(screen_width, screen_height))
+    screen_width = root.winfo_screenwidth() // 2 - 380
+    screen_height = root.winfo_screenheight() // 2 - 125
+    root.geometry('760x250+{}+{}'.format(screen_width, screen_height))
 
     db = DataBase()
 
@@ -95,29 +98,40 @@ def show_my_students(main_user):
     var_order = tk.IntVar()
     var_order.set(0)
     r_by_name = tk.Radiobutton(text="По имени", variable=var_order, value=0)
-    r_by_p_u = tk.Radiobutton(text="По возрастанию баллов", variable=var_order, value=1)
-    r_by_p_d = tk.Radiobutton(text="По убыванию баллов", variable=var_order, value=2)
+    r_by_p_u = tk.Radiobutton(
+        text="По возрастанию баллов", variable=var_order, value=1)
+    r_by_p_d = tk.Radiobutton(
+        text="По убыванию баллов", variable=var_order, value=2)
 
-    b_show_students = tk.Button(text="Показать", compound=tk.TOP, command=show_students)
+    b_show_students = tk.Button(
+        text="Показать", compound=tk.TOP, command=show_students)
     b_add_points = tk.Button(text="Добавить баллы", command=add_points)
     b_show_profile = tk.Button(text="Посмотреть профиль", command=show_profile)
     b_back = tk.Button(text="Назад", command=go_back)
-    lbox = tk.Listbox(width = 40, height = 10)
-    label = tk.Label(width=40)
+    lbox = tk.Listbox(width=40, height=10)
 
-    r_all.pack()
-    r_cons.pack()
-    r_disp.pack()
-    r_by_name.pack()
-    r_by_p_u.pack()
-    r_by_p_d.pack()
-    b_show_students.pack(side="top")
-    lbox.pack(side="top")
+    title = tk.Label()
+    title['text'] = "Список студентов:"
+    title.place(x=0, y=0, width=300, height=20)
+    lbox.place(x=0, y=20, width=300, height=150)
+
+    r_all.place(x=305, y=20,  width=220, height=20)
+    r_cons.place(x=310, y=70,  width=220, height=20)
+    r_disp.place(x=305, y=120,  width=220, height=20)
+
+    r_by_name.place(x=510, y=20, width=220, height=20)
+    r_by_p_u.place(x=550, y=70, width=220, height=20)
+    r_by_p_d.place(x=545, y=120, width=220, height=20)
+
+    b_show_students.place(x=500, y=180, width=100, height=30)
+
+    b_show_profile.place(x=0, y=170, width=300, height=30)
+
     if main_user.type != "админ":
-        b_add_points.pack()
-    b_show_profile.pack()
-    label.pack()
-    b_back.pack(side=tk.RIGHT)
+        b_add_points.place(x=0, y=200, width=300, height=30)
+
+    # label.pack()
+    b_back.place(x=0, y=230, width=40, height=20)
 
     show_students()
     root.mainloop()
