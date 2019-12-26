@@ -109,6 +109,10 @@ class DataBase:
         q = CaseQuery()
         return q.get_all_cases()
 
+    def delete_case_by_case_id(self, case_id):
+        q = CaseQuery()
+        return q.delete_case_by_case_id(case_id)
+
     def update_case_by_id(self, case):
         q = CaseQuery()
         return q.update_case_by_id(case)
