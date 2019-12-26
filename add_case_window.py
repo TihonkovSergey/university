@@ -68,6 +68,8 @@ def add_case(main_user):
                                                         ("All files", "*.*") ))
                 if not db.get_document_by_id(file_name):
                     if not file_name:
+                        db.delete_supplicant_by_id(supp_id)
+                        db.delete_case_by_id(case_id)
                         mb.showerror("Ошибка", "Вы не выбрали файл!")
                         return
                     file_path_list = file_name.split("/")
@@ -75,9 +77,12 @@ def add_case(main_user):
                     db.insert_document(doc)
                     go_back()
                 else:
+                    db.delete_supplicant_by_id(supp_id)
+                    db.delete_case_by_id(case_id)
                     mb.showerror("Ошибка", "Один и тот же документ не может быть прикреплен к разным делам")
                     return
         else:
+            db.delete_supplicant_by_id(supp_id)
             mb.showerror("Ошибка", "Ошибка в добавлении дела! " + case_id)
             return
         go_back()
