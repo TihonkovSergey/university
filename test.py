@@ -1,108 +1,200 @@
 import psycopg2
 from jcUserClass import User
-from jcQuerys import *
+from jcQueries import DataBase
 from psycopg2 import sql
 from tkinter import *
 from tkinter import filedialog as fd
+from tkinter import messagebox as mb
+import json
+from jcDocumentsClass import Document
+from tkcalendar import DateEntry
+import datetime
+
+db = DataBase()
+now = datetime.datetime.now()
+print(str(now).split()[0])
+
+data = {
+    "users": [
+		{
+			"id": "id",
+			"name": "Сергей",
+			"type": "студент",
+			"competence": "консультант",
+			"login": "st1",
+			"password": "0000",
+			"personal_data": "",
+			"points" : "0.0"
+		},
+		{
+			"id": "id",
+			"name": "Первак Андрей Андреевич",
+			"type": "преподаватель",
+			"competence": "граждансое право",
+			"login": "st124141",
+			"password": "0000",
+			"personal_data": "",
+			"points" : "0.0"
+		},
+		{
+			"id": "id",
+			"name": "Жуткова Алена Васильевна",
+			"type": "преподаватель",
+			"competence": "трудовое право",
+			"login": "st123532",
+			"password": "0000",
+			"personal_data": "",
+			"points" : "0.0"
+		},
+		{
+			"id": "id",
+			"name": "Мятникова Ирга Федоровна",
+			"type": "преподаватель",
+			"competence": "трудовое право",
+			"login": "st121531",
+			"password": "0000",
+			"personal_data": "",
+			"points" : "0.0"
+		},
+		{
+			"id": "id",
+			"name": "Иванов Иван Петрович",
+			"type": "студент",
+			"competence": "диспетчер",
+			"login": "st654321",
+			"password": "0000",
+			"personal_data": "",
+			"points" : "0.0"
+		},
+		{
+			"id": "id",
+			"name": "Левченко Авдотья Николаевна",
+			"type": "преподаватель",
+			"competence": "административное право",
+			"login": "st122331",
+			"password": "0000",
+			"personal_data": "",
+			"points" : "0.0"
+		},
+		{
+			"id": "id",
+			"name": "Петров Борис Владиславович",
+			"type": "студент",
+			"competence": "консультант",
+			"login": "st125531",
+			"password": "0000",
+			"personal_data": "",
+			"points" : "0.0"
+		},
+		{
+			"id": "id",
+			"name": "Петрова Ульяна Сергеевна",
+			"type": "студент",
+			"competence": "диспетчер",
+			"login": "st065531",
+			"password": "0000",
+			"personal_data": "",
+			"points" : "0.0"
+		},
+		{
+			"id": "id",
+			"name": "Пронко Мария Владиславовна",
+			"type": "студент",
+			"competence": "консультант",
+			"login": "st124431",
+			"password": "0000",
+			"personal_data": "",
+			"points" : "0.0"
+		},
+		{
+			"id": "id",
+			"name": "Рожкова Анастасия Марковна",
+			"type": "студент",
+			"competence": "диспетчер",
+			"login": "st125534",
+			"password": "0000",
+			"personal_data": "",
+			"points" : "0.0"
+		},
+		{
+			"id": "id",
+			"name": "Неверова Патриция Аркадьевна",
+			"type": "преподаватель",
+			"competence": "жилищное право",
+			"login": "st131531",
+			"password": "0000",
+			"personal_data": "",
+			"points" : "0.0"
+		},
+		{
+			"id": "id",
+			"name": "Чукчина Эльвира Маратовна",
+			"type": "преподаватель",
+			"competence": "гражданское право",
+			"login": "st125555",
+			"password": "0000",
+			"personal_data": "",
+			"points" : "0.0"
+		},
+		{
+			"id": "id",
+			"name": "Верхеев Игорь Игоревич",
+			"type": "преподаватель",
+			"competence": "административное право",
+			"login": "st385627",
+			"password": "0000",
+			"personal_data": "",
+			"points" : "0.0"
+		}
+    ]
+}
+
+"""file_name = fd.askopenfilename(filetypes=(("Json FILES", "*.json"),
+                                                        ("All files", "*.*") ))
+if not file_name:
+	mb.showerror("Ошибка", "Вы не выбрали файл!")
+file_path_list = file_name.split("/")
+print(file_path_list[-1])
+#doc = Document((file_name,))
+"""
+"""
+file_name = fd.askopenfilename()
 
 
-def update_user_by_id(user_id):
-    conn = psycopg2.connect(dbname='postgres', user='postgres', password='postgres', host='localhost')
-    with conn.cursor() as cursor:
-        sql = """ UPDATE users
-                    SET competence = %s
-                    WHERE user_id = %s"""
-        try:
-            # execute the UPDATE  statement
-            cursor.execute(sql, ('консультант', user_id))
-            # get the number of updated rows
-            conn.commit()
-            # Close communication with the PostgreSQL database
-            cursor.close()
-        except (Exception, psycopg2.DatabaseError) as error:
-            print(error)
+with open(file_name, "w") as write_file:
+    json.dump(data, write_file)
 
+#file_name = "D:/homeworks/university_databases/add_users.json"
 
+file_name = fd.askopenfilename()
+print(file_name) 
+f = open(file_name)
 
-def show_users(event, users):
-    lbox.delete(0,END)
-    for i in users:
-        lbox.insert(0,i.name)
+new_data = json.load(f)
 
-def get_and_update_choosen(event, users):
-    label['text'] = ""
-    select = list(lbox.curselection())
-    if len(select):
-        label['text'] = users[-select[0] -1].name
-        #update_user_by_id(users[-select[0] -1].id)
+f.close()
 
-users_list = get_all_users()
+for data in new_data["users"]:
+		user = User((data["id"], data["name"], data["type"], data["competence"], data["login"], data["password"], data["personal_data"], data["points"]))
+		print(user.name)
+#print(new_data["users"][0])
+"""
+"""
+user = User(("id", "Главный Админ Админов", "админ", "админ", "admin", "0000", "", "0.0"))
+db.insert_users([user])
 
-root = Tk()
-#e = Entry(width=20)
-b_show = Button(text="Показать")
-b_get = Button(text="Вывести выбранного")
+users = db.get_all_users()
+for u in users:
+    print(u)"""
 
-label = Label(bg='black', fg='white', width=40)
-lbox = Listbox(width = 40, height = 10) 
+"""event = db.get_points_event_by_id("1")
+print(event)
+"""
 
-def about():
-    a = Toplevel()
-    a.geometry('200x150')
-    a['bg'] = 'grey'
-    a.overrideredirect(True)
-    Label(a, text="About this").pack(expand=1)
-    a.after(5000, lambda: a.destroy())
-
-def insert_text():
-    file_name = fd.askopenfilename()
-    f = open(file_name)
-    s = f.read()
-    text.insert(1.0, s)
-    f.close()
-
-def extract_text():
-    file_name = fd.asksaveasfilename(filetypes=(("TXT files", "*.txt"),
-                                        ("HTML files", "*.html;*.htm"),
-                                                ("All files", "*.*") ))
-    f = open(file_name, 'w')
-    s = text.get(1.0, END)
-    f.write(s)
-    f.close()
-
-text = Text()
-text.grid(row=0)
-b_show.bind('<Button-1>', lambda event, users=users_list: show_users(event, users))
-b_get.bind('<Button-1>', lambda event, users=users_list: get_and_update_choosen(event, users))
-b_insert = Button(text="Открыть", command=insert_text)
-b_extract = Button(text="Сохранить", command=extract_text)
-
-#e.pack()
-b_show.grid(row=1)#b_show.pack()
-b_get.grid(row=2)#b_get.pack()
-label.grid(row=3)#label.pack()
-lbox.grid(row=4)#lbox.pack()
-b_insert.grid(row=5)
-b_extract.grid(row=6)
-
-screen_width = root.winfo_screenwidth() // 2 - 300 
-screen_height = root.winfo_screenheight() // 2 - 300 
-root.geometry('800x800+{}+{}'.format(screen_width, screen_height))
-root.title("Главное окно")
-
-root.mainloop()
-
-"""with conn.cursor() as cursor:
-    sql = """""" UPDATE users
-                SET personal_data = %s
-                WHERE name = %s""""""
-    try:
-        # execute the UPDATE  statement
-        cursor.execute(sql, (json_string, 'Васильева Алиса'))
-        # get the number of updated rows
-        conn.commit()
-        # Close communication with the PostgreSQL database
-        cursor.close()
-    except (Exception, psycopg2.DatabaseError) as error:
-        print(error)
+"""
+user = db.get_user_by_id(1)
+user.name+= " Алексеевич"
+db.update_user_by_id(user)
+user = db.get_user_by_id(1)
+print(user)
 """
