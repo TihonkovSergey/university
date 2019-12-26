@@ -111,13 +111,17 @@ def show_my_students(main_user):
     b_add_points = tk.Button(text="Добавить баллы", command=add_points)
     b_show_profile = tk.Button(text="Посмотреть профиль", command=show_profile)
     b_back = tk.Button(text="Назад", command=go_back)
+    
     lbox = tk.Listbox(width=40, height=10)
+    yScroll = tk.Scrollbar(lbox, orient = tk.VERTICAL)
+    yScroll.config(command=lbox.yview)
+    lbox.config(yscrollcommand=yScroll.set)
 
     title = tk.Label()
     title['text'] = "Список студентов:"
     title.place(x=0, y=0, width=300, height=20)
     lbox.place(x=0, y=20, width=300, height=150)
-
+    yScroll.place(x=0, y=320, width=20, height=150)
     r_all.place(x=305, y=20,  width=220, height=20)
     r_cons.place(x=310, y=70,  width=220, height=20)
     r_disp.place(x=305, y=120,  width=220, height=20)
