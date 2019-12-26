@@ -1,6 +1,7 @@
 import tkinter as tk
 from jcQueries import DataBase
 import windows_init
+from tkinter import messagebox as mb 
 
 curr_cases = []
 
@@ -70,7 +71,17 @@ def show_my_cases(main_user):
             root.destroy()
             windows_init.show_case_window(main_user, select_case)
         else:
-            label['text'] = "Выберите дело!"
+            mb.showerror("Ошибка", "Вы не выбрали дело!")
+            return
+
+    def change():
+        if type_var.get() == 0:
+            show_all()
+        elif type_var.get() == 1:
+            show_check()
+        else:
+            show_finished()
+
     root = tk.Tk()
     root.resizable(False, False)
     root.title("Мои дела")
@@ -80,22 +91,26 @@ def show_my_cases(main_user):
 
     db = DataBase()
 
-    b_all_cases = tk.Button(text="Все дела", compound=tk.TOP, command=show_all)
-    b_check_cases = tk.Button(text="Требующие подтверждения дела", command=show_check)
+    type_var = tk.IntVar()
+    type_var.set(0)
+    
+    r_all_cases = tk.Radiobutton(text="Все дела", variable=type_var, value=0, command=change)
+    r_check_cases = tk.Radiobutton(text="Требующие подтверждения", variable=type_var, value=1, command=change)
     if main_user.type == "студент":
-        b_check_cases = tk.Button(text="Требующие доработки дела", command=show_check)
-    b_finished_cases = tk.Button(text="Завершенные дела", command=show_finished)
+        r_check_cases = tk.Radiobutton(text="Требующие доработки", variable=type_var, value=1, command=change)
+    r_finished_cases = tk.Radiobutton(text="Завершенные", variable=type_var, value=2, command=change)
+    
     b_back = tk.Button(text="Назад", command=go_back)
     lbox = tk.Listbox(width = 40, height = 10)
     b_case_win = tk.Button(text="Просмотреть выбранное дело", command=show_case_win)
-    label = tk.Label(width=40)
-
-    b_all_cases.pack()
-    b_check_cases.pack()
-    b_finished_cases.pack()
+    
+    change()
+    
+    r_all_cases.pack()
+    r_check_cases.pack()
+    r_finished_cases.pack()
     lbox.pack()
     b_case_win.pack()
-    label.pack()
     b_back.pack(side=tk.RIGHT)
 
     show_all()
