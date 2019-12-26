@@ -1,9 +1,10 @@
 import tkinter as tk
 from jcQueries import DataBase
 import windows_init
-from tkinter import messagebox as mb 
+from tkinter import messagebox as mb
 
 curr_cases = []
+
 
 def show_my_cases(main_user):
     def go_back():
@@ -16,25 +17,27 @@ def show_my_cases(main_user):
         elif main_user.type == "студент":
             root.destroy()
             windows_init.show_consultant_window(main_user)
-        else: # какая-то ошибка
+        else:  # какая-то ошибка
             root.destroy()
             windows_init.show_login(main_user)
+
     def show_all():
-        lbox.delete(0,tk.END)
+        lbox.delete(0, tk.END)
         global curr_cases
         if main_user.type == "тьютор":
             curr_cases = db.get_all_cases()
         elif main_user.type == "преподаватель":
             curr_cases = db.get_cases_by_teacher_id(main_user.id)
-        elif main_user.type == "студент": 
+        elif main_user.type == "студент":
             curr_cases = db.get_cases_by_student_id(main_user.id)
         if not curr_cases:
             lbox.insert(tk.END, "Ничего не найдено")
             curr_cases = []
         for c in curr_cases:
-            lbox.insert(tk.END,c.title)
+            lbox.insert(tk.END, c.title)
+
     def show_check():
-        lbox.delete(0,tk.END)
+        lbox.delete(0, tk.END)
         global curr_cases
         if main_user.type == "тьютор":
             curr_cases = db.get_all_cases_waiting_for_appointment()
@@ -46,9 +49,10 @@ def show_my_cases(main_user):
             lbox.insert(tk.END, "Ничего не найдено")
             curr_cases = []
         for c in curr_cases:
-            lbox.insert(tk.END,c.title)
+            lbox.insert(tk.END, c.title)
+
     def show_finished():
-        lbox.delete(0,tk.END)
+        lbox.delete(0, tk.END)
         global curr_cases
         if main_user.type == "тьютор":
             pass
@@ -61,7 +65,7 @@ def show_my_cases(main_user):
             lbox.insert(tk.END, "Ничего не найдено")
             curr_cases = []
         for c in curr_cases:
-            lbox.insert(tk.END,c.title)
+            lbox.insert(tk.END, c.title)
 
     def show_case_win():
         global curr_cases
@@ -85,33 +89,42 @@ def show_my_cases(main_user):
     root = tk.Tk()
     root.resizable(False, False)
     root.title("Мои дела")
-    screen_width = root.winfo_screenwidth() // 2 - 320 
-    screen_height = root.winfo_screenheight() // 2 - 210 
-    root.geometry('640x420+{}+{}'.format(screen_width, screen_height))
+    screen_width = root.winfo_screenwidth() // 2 - 265
+    screen_height = root.winfo_screenheight() // 2 - 110
+    root.geometry('530x220+{}+{}'.format(screen_width, screen_height))
 
     db = DataBase()
 
     type_var = tk.IntVar()
     type_var.set(0)
-    
-    r_all_cases = tk.Radiobutton(text="Все дела", variable=type_var, value=0, command=change)
-    r_check_cases = tk.Radiobutton(text="Требующие подтверждения", variable=type_var, value=1, command=change)
+
+    r_all_cases = tk.Radiobutton(
+        text="Все дела", variable=type_var, value=0, command=change)
+    r_check_cases = tk.Radiobutton(
+        text="Требующие подтверждения", variable=type_var, value=1, command=change)
     if main_user.type == "студент":
-        r_check_cases = tk.Radiobutton(text="Требующие доработки", variable=type_var, value=1, command=change)
-    r_finished_cases = tk.Radiobutton(text="Завершенные", variable=type_var, value=2, command=change)
-    
+        r_check_cases = tk.Radiobutton(
+            text="Требующие доработки", variable=type_var, value=1, command=change)
+    r_finished_cases = tk.Radiobutton(
+        text="Завершенные", variable=type_var, value=2, command=change)
+
     b_back = tk.Button(text="Назад", command=go_back)
-    lbox = tk.Listbox(width = 40, height = 10)
-    b_case_win = tk.Button(text="Просмотреть выбранное дело", command=show_case_win)
-    
+    lbox = tk.Listbox(width=40, height=10)
+    b_case_win = tk.Button(
+        text="Просмотреть выбранное дело", command=show_case_win)
+
     change()
-    
-    r_all_cases.pack()
-    r_check_cases.pack()
-    r_finished_cases.pack()
-    lbox.pack()
-    b_case_win.pack()
-    b_back.pack(side=tk.RIGHT)
+
+    title = tk.Label()
+    title['text'] = "Список дел:"
+
+    title.place(x=0, y=0, width=300, height=20)
+    lbox.place(x=0, y=20, width=300, height=150)
+    r_all_cases.place(x=270, y=30, width=220, height=20)
+    r_check_cases.place(x=310, y=80,  width=220, height=20)
+    r_finished_cases.place(x=285, y=130,  width=220, height=20)
+    b_case_win.place(x=0, y=170, width=300, height=30)
+    b_back.place(x=0, y=200, width=40, height=20)
 
     show_all()
     root.mainloop()
