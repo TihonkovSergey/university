@@ -4,6 +4,7 @@ import windows_init
 from tkinter import messagebox as mb
 from tkinter import filedialog as fd
 from jcDocumentsClass import Document
+from jcPointsEventClass import PointsEvent
 
 curr_docs = []
 
@@ -26,8 +27,18 @@ def show_case(main_user, case):
             case.status = "ожидается проверка правок резолюции"
         elif curr_status == "ожидается проверка правок плана консультации":
             case.status = "ожидаются правки резолюции"
-        else: 
+        else:
             case.status = "завершено"
+            points_event = PointsEvent(("", "", "", "", "", ""))
+            points_event.points = "1.0"
+            points_event.s_id = case.s_id
+            points_event.t_id = main_user.id
+            points_event.reason = "завершение дела"
+            db.insert_points_event([points_event])
+            user = db.get_user_by_id(case.s_id)
+            user.points = user.points + 1.0
+            db.update_user_by_id(user)
+            
         db.update_case_by_id(case)
         root.destroy()
         windows_init.show_case_window(main_user, case)
