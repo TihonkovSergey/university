@@ -210,3 +210,11 @@ class DataBase:
     def get_next_duties(self):
         q = DutyQuery()
         return q.get_next_duties()
+
+    def get_prev_duties_for_particular_student(self, student_id):
+        q = DutyQuery()
+        return q.get_prev_duties_for_particular_student(student_id)
+
+    def get_next_duties_for_particular_student(self, student_id):
+        q = DutyQuery()
+        return q.get_next_duties_for_particular_student(student_id)

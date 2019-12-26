@@ -144,3 +144,41 @@ class DutyQuery:
             return duties
         else:
             return None
+
+    def get_prev_duties_for_particular_student(self, student_id):
+        now = datetime.datetime.now()
+        conn = psycopg2.connect(
+            dbname=self.name, user=self.user, password=self.password, host=self.host)
+        records = []
+        with conn.cursor() as cursor:
+            cursor.execute('SELECT * FROM duty_feed WHERE (date < %s) AND (s_id = %s) ORDER BY date',
+                           (str(now), student_id))
+            records = cursor.fetchall()
+        conn.close()
+        duties = []
+        if len(records) > 0:
+            for rec in records:
+                duty = Duty(rec)
+                duties.append(duty)
+            return duties
+        else:
+            return None
+
+    def get_next_duties_for_particular_student(self, student_id):
+        now = datetime.datetime.now()
+        conn = psycopg2.connect(
+            dbname=self.name, user=self.user, password=self.password, host=self.host)
+        records = []
+        with conn.cursor() as cursor:
+            cursor.execute('SELECT * FROM duty_feed WHERE (date >= %s) AND (s_id = %s) ORDER BY date',
+                           (str(now), student_id))
+            records = cursor.fetchall()
+        conn.close()
+        duties = []
+        if len(records) > 0:
+            for rec in records:
+                duty = Duty(rec)
+                duties.append(duty)
+            return duties
+        else:
+            return None
